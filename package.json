@@ -1,0 +1,19 @@
+{
+  "name": "bkcook-backend",
+  "version": "1.0.0",
+  "description": "Website học nấu ăn - Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viethungbk/BKCook-Backend.git"
+  },
+  "author": "Viet Hung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viethungbk/BKCook-Backend/issues"
+  },
+  "homepage": "https://github.com/viethungbk/BKCook-Backend#readme"
+}
