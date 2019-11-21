@@ -153,13 +153,15 @@ Người dùng: Admin, User, Kiểm duyệt
 
 Nhà hàng
 
-| Tên trường | Kiểu dữ liệu | Required | Mô tả                  |
-| ---------- | ------------ | -------- | ---------------------- |
-| _id        | String       | Require  | Id nhà hàng            |
-| name       | String       |          | Tên nhà hàng           |
-| address    | String       |          | Địa chỉ nhà hàng       |
-| phone      | String       |          | Số điện thoại nhà hàng |
-| avatar     | String       |          | Link ảnh đại diện      |
+| Tên trường     | Kiểu dữ liệu    | Required | Mô tả                                  |
+| -------------- | --------------- | -------- | -------------------------------------- |
+| _id            | String          | Require  | Id nhà hàng                            |
+| name           | String          |          | Tên nhà hàng                           |
+| address        | String          |          | Địa chỉ nhà hàng                       |
+| phone          | String          |          | Số điện thoại nhà hàng                 |
+| avatar         | String          |          | Link ảnh đại diện                      |
+| menus          | Array[ObjectId] |          | Mảng các Id của menu nhà hàng          |
+| cookingClasses | Array[ObjectId] |          | Mảng các Id của lớp học mà nhà hàng mở |
 
 ## 10. RestaurantMenu
 
@@ -174,9 +176,27 @@ Thực đơn của nhà hàng
 
 Trường recipes là mảng các Object có các trường như sau:
 
-| Tên trường | Kiểu dữ liệu | Required | Mô tả         |
-| ---------- | ------------ | -------- | ------------- |
-| _id        | String       |          | Id của món ăn |
-|            |              |          |               |
-|            |              |          |               |
+| Tên trường  | Kiểu dữ liệu | Required | Mô tả               |
+| ----------- | ------------ | -------- | ------------------- |
+| _id         | String       |          | Id của món ăn       |
+| name        | String       |          | Tên món ăn          |
+| description | String       |          | Mô tả cho món ăn    |
+| price       | Number       |          | Giá tiền món ăn     |
+| image       | String       |          | Hình ảnh cho món ăn |
+
+## 11. CookingClass
+
+Lớp học nấu ăn
+
+| Tên trường       | Kiểu dữ liệu | Required | Mô tả                       |
+| ---------------- | ------------ | -------- | --------------------------- |
+| _id              | String       | Require  | Id của lớp học              |
+| className        | String       |          | Tên lớp học                 |
+| address          | String       |          | Địa chỉ lớp học             |
+| startDate        | Date         |          | Ngày bắt đầu mở lớp         |
+| shortDescription | String       |          | Mô tả ngắn gọn về lớp học   |
+| startTime        | Date         |          | Giờ bắt đầu học             |
+| endTime          | Date         |          | Giờ kết thúc buổi học       |
+| classDecription  | String       |          | Mô tả chi tiết lớp học      |
+| tutorDescription | String       |          | Mô tả về giảng viên dạy học |
 
