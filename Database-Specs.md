@@ -14,19 +14,16 @@ Công thức món ăn
 | tags             | Array[String] |          | Mảng các tags để tìm kiếm món ăn                             |
 | typeRecipe       | Array[String] |          | Loại công thức: Món khai vị, Món chính, Thức uống, Món nhậu, Món tráng miệng, Món ăn sáng, Bánh - Bánh ngọt, Món chay, Nhanh và dễ, Món ăn cho trẻ |
 | countryCuisine   | String        |          | Ẩm thực của đất nước: Việt Nam, Hàn Quốc, Trung Quốc, Pháp, Úc, Nga, Nam Phi, Thái Lan, Nhật, Ấn Độ, Brazil, Mexico, Malaysia, Ý, Âu, Singapore, Mỹ, Indonesia, Philipines |
-| typeOfDish       | String        |          | Loại món: Salad, Lẩu, Nem - Chả, Bánh mặn, Nước ép, Chè, Snacks,... |
-| processingMethod | String        |          | Phương pháp chế biến món ăn: Nướng, Luộc, Xay, Nấu, Quay, Vắt, Nước chấm, Ăn sống, Rang, Ép, Ủ,... |
+| typeOfDish       | Array[String] |          | Loại món: Salad, Lẩu, Nem - Chả, Bánh mặn, Nước ép, Chè, Snacks,... |
+| processingMethod | Array[String] |          | Phương pháp chế biến món ăn: Nướng, Luộc, Xay, Nấu, Quay, Vắt, Nước chấm, Ăn sống, Rang, Ép, Ủ,... |
 | season           | Array         |          | Món ăn này thường sử dụng vào mùa nào: Mùa xuân, Mùa hạ, Mùa thu, Mùa đông |
-| pursose          | String        |          | Mục đích của món ăn: Ăn sáng, Giảm cân, Tiệc, Ăn gia đình, Tốt cho trẻ em, Tăng cân, Ăn trưa, Cho phái mạnh,... |
+| purpose          | Array[String] |          | Mục đích của món ăn: Ăn sáng, Giảm cân, Tiệc, Ăn gia đình, Tốt cho trẻ em, Tăng cân, Ăn trưa, Cho phái mạnh,... |
 | ratingStar       | Number        |          | Số sao rate cho công thức                                    |
-| status           | Number        |          | Trạng thái của công thức (Chưa duyệt / Đã duyệt)             |
+| status           | Number        |          | Trạng thái của công thức<br />0: Chưa duyệt<br />1: Đã duyệt |
 | category         | Array         |          | Category của công thức                                       |
-| commentsId       | ObjectId      |          | Id của comment về món ăn                                     |
-| stepsId          | ObjectId      |          | Id của các bước làm món ăn                                   |
-| materialsId      | ObjectId      |          | Id các nguyên liệu của món ăn                                |
 | dateCreated      | Date          |          | Ngày tạo công thức                                           |
-| dateModified     | Date          |          | Ngày chỉnh sửa gần nhất                                      |
 | nutrition        | Array[String] |          | Chất dinh dưỡng có trong món ăn: Gluxit, Protein, Vitamin và khoáng chất, Lipit |
+| calo             | Number        |          | Năng lượng mà món ăn cung cấp                                |
 
 ## 2. Steps
 
@@ -49,7 +46,7 @@ Trường steps là mảng các object có mô tả như sau:
 | tricks      | String        |          | Các mẹo nhỏ để thực hiện bước này |
 | time        | Number        |          | Thời gian thực hiện bước này      |
 
-## 3. Comments
+## 3. Comment
 
 Bình luận
 
@@ -85,7 +82,7 @@ Trường materials là mảng các Object có mô tả như sau:
 | _id          | String       | Require  | Id của materials       |
 | name         | String       |          | Tên nguyên liệu        |
 | unit         | String       |          | Đơn vị tính: Kg, quả   |
-| quantitative | int          |          | Định lượng: 1, 2.3,... |
+| quantitative | Number       |          | Định lượng: 1, 2.3,... |
 
 ## 5. Rate
 
@@ -100,68 +97,65 @@ Trường materials là mảng các Object có mô tả như sau:
 
 Trường rates là mảng các Object có mô tả như sau:
 
-| Tên trường   | Kiểu dữ liệu | Required | Mô tả                 |
-| ------------ | ------------ | -------- | --------------------- |
-| _id          | String       | Require  | Id                    |
-| idUser       | String       | Require  | Id của người đánh giá |
-| ratingNumber | Number       | Require  | Số sao đánh giá       |
+| Tên trường | Kiểu dữ liệu | Required | Mô tả                 |
+| ---------- | ------------ | -------- | --------------------- |
+| _id        | String       | Require  | Id                    |
+| idUser     | String       | Require  | Id của người đánh giá |
+| rating     | Number       | Require  | Số sao đánh giá       |
 
-## 6. Blog
+## 6. Post
 
-Các bài viết chia sẻ
+Bài viết chia sẻ về món ăn đã thực hiện của người dùng
 
-| Tên trường | Kiểu dữ liệu  | Required | Mô tả                                          |
-| ---------- | ------------- | -------- | ---------------------------------------------- |
-| _id        | String        | Require  | Id của blog                                    |
-| content    | String        |          | Nội dung blog                                  |
-| category   | Array[String] |          | Category của blog                              |
-| status     | Number        |          | Trạng thái của bài đăng: Chưa duyệt / Đã duyệt |
-| user       | String        |          | Id của người đăng bài viết                     |
+| Tên trường | Kiểu dữ liệu  | Required | Mô tả                                                        |
+| ---------- | ------------- | -------- | ------------------------------------------------------------ |
+| _id        | String        | Require  | Id của blog                                                  |
+| content    | String        |          | Nội dung blog                                                |
+| status     | Number        |          | Trạng thái của bài đăng:<br />0: Chưa duyệt<br />1: Đã duyệt |
+| image      | String        |          | Link ảnh                                                     |
+| likes      | Array[String] |          | Mảng Id các user thích bài post                              |
+| idUser     | String        |          | Id của người đăng bài viết                                   |
 
-## 7. Post
+## 7. Blog
 
-Bài viết chia sẻ về món ăn đã thực hiện
+Bài viết chia sẻ về kiến thức, kinh nghiệm
 
-| Tên trường | Kiểu dữ liệu  | Required | Mô tả                     |
-| ---------- | ------------- | -------- | ------------------------- |
-| _id        | String        | Require  | Id cùa bài viết           |
-| title      | String        | Require  | Tiêu đề bài viết          |
-| content    | String        |          | Nội dung bài viết         |
-| images     | Array[String] |          | Mảng các ảnh cho bài viết |
-| video      | String        |          | Link video                |
-| likes      | Number        |          | Số người thích bài viết   |
+| Tên trường | Kiểu dữ liệu | Required | Mô tả             |
+| ---------- | ------------ | -------- | ----------------- |
+| _id        | String       | Require  | Id cùa bài viết   |
+| title      | String       | Require  | Tiêu đề bài viết  |
+| content    | String       |          | Nội dung bài viết |
+| image      | String       |          | Ảnh               |
+| video      | String       |          | Link video        |
 
 ## 8. User
 
 Người dùng: Admin, User, Kiểm duyệt
 
-| Tên trường     | Kiểu dữ liệu  | Required | Mô tả                                   |
-| -------------- | ------------- | -------- | --------------------------------------- |
-| _id            | String        | Require  | Id của người dùng                       |
-| role           | Number        | Require  | Loại người dùng                         |
-| username       | String        |          | Tên tài khoản                           |
-| password       | String        |          | Mật khẩu                                |
-| avatar         | String        |          | Link ảnh đại diện                       |
-| email          | String        |          | Email                                   |
-| phone          | String        |          | Số điện thoại                           |
-| address        | String        |          | Địa chỉ                                 |
-| dateCreate     | Date          |          | Ngày tạo tài khoản                      |
-| watchedRecipes | Array[String] |          | Mảng các Id của công thức món ăn đã xem |
-| savedRecipes   | Array[String] |          | Mảng các Id của công thức đã lưu        |
+| Tên trường  | Kiểu dữ liệu | Required | Mô tả                                                        |
+| ----------- | ------------ | -------- | ------------------------------------------------------------ |
+| _id         | String       | Require  | Id của người dùng                                            |
+| role        | Number       | Require  | Loại người dùng<br />0: Admin<br />1: Kiểm duyệt<br />2: Người dùng |
+| userName    | String       |          | Tên tài khoản                                                |
+| password    | String       |          | Mật khẩu                                                     |
+| gender      | String       |          | Giới tính                                                    |
+| avatar      | String       |          | Link ảnh đại diện                                            |
+| email       | String       |          | Email                                                        |
+| weight      | Number       |          | Cân nặng                                                     |
+| height      | Number       | `        | Chiều cao                                                    |
+| dateCreated | Date         |          | Ngày tạo tài khoản                                           |
 
 ## 9. Restaurant
 
 Nhà hàng
 
-| Tên trường     | Kiểu dữ liệu    | Required | Mô tả                                  |
-| -------------- | --------------- | -------- | -------------------------------------- |
-| _id            | String          | Require  | Id nhà hàng                            |
-| name           | String          |          | Tên nhà hàng                           |
-| address        | String          |          | Địa chỉ nhà hàng                       |
-| phone          | String          |          | Số điện thoại nhà hàng                 |
-| avatar         | String          |          | Link ảnh đại diện                      |
-| menus          | Array[ObjectId] |          | Mảng các Id của menu nhà hàng          |
-| cookingClasses | Array[ObjectId] |          | Mảng các Id của lớp học mà nhà hàng mở |
+| Tên trường | Kiểu dữ liệu | Required | Mô tả                  |
+| ---------- | ------------ | -------- | ---------------------- |
+| _id        | String       | Require  | Id nhà hàng            |
+| name       | String       |          | Tên nhà hàng           |
+| address    | String       |          | Địa chỉ nhà hàng       |
+| phone      | String       |          | Số điện thoại nhà hàng |
+| avatar     | String       |          | Link ảnh đại diện      |
 
 ## 10. RestaurantMenu
 
@@ -195,8 +189,26 @@ Lớp học nấu ăn
 | address          | String       |          | Địa chỉ lớp học             |
 | startDate        | Date         |          | Ngày bắt đầu mở lớp         |
 | shortDescription | String       |          | Mô tả ngắn gọn về lớp học   |
-| startTime        | Date         |          | Giờ bắt đầu học             |
-| endTime          | Date         |          | Giờ kết thúc buổi học       |
+| startTime        | String       |          | Giờ bắt đầu học             |
+| endTime          | String       |          | Giờ kết thúc buổi học       |
 | classDecription  | String       |          | Mô tả chi tiết lớp học      |
 | tutorDescription | String       |          | Mô tả về giảng viên dạy học |
+
+## 12. SavedRecipe
+
+Các công thức đã lưu 
+
+| Tên trường  | Kiểu dữ liệu  | Required | Mô tả                            |
+| ----------- | ------------- | -------- | -------------------------------- |
+| _id         | String        | Require  | Id                               |
+| idUser      | String        |          | Id của người dùng                |
+| savedRecipe | Array[String] |          | Mảng các Id của công thức đã lưu |
+
+## 13. BlogCategory
+
+| Tên trường | Kiểu dữ liệu | Requỉed | Mô tả            |
+| ---------- | ------------ | ------- | ---------------- |
+| _id        | String       |         | Id của category  |
+| name       | String       |         | Tên của category |
+| image      | String       |         | Ảnh của category |
 

@@ -2,63 +2,55 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const userSchema = new mongoose.Schema(
-  {
-    email: {
-      type: String,
-      trim: true,
-      lowercase: true,
-      required: true
-    },
-    password: {
-      type: String,
-      trim: true,
-      minlength: 7,
-      required: true
-    },
-    role: {
-      id: {
-        type: Number,
-        default: 0
-      },
-      roleName: {
-        type: String,
-        trim: true,
-        lowercase: true
-      }
-    },
-    name: {
-      type: String,
-      trim: true,
-      maxlength: 50
-    },
-    gender: {
-      type: String
-    },
-    avatar: {
-      type: String
-    },
-    recentWords: [
-      {
-        word: {
-          type: String,
-          lowercase: true,
-          trim: true
-        }
-      }
-    ],
-    tokens: [
-      {
-        token: {
-          type: String
-        }
-      }
-    ]
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    required: true
   },
-  {
-    timestamps: true
-  }
-)
+  password: {
+    type: String,
+    trim: true,
+    minlength: 7,
+    required: true
+  },
+  role: {
+    type: Number,
+    require: true
+  },
+  userName: {
+    type: String,
+    trim: true,
+    maxlength: 50
+  },
+  gender: {
+    type: String
+  },
+  avatar: {
+    type: String
+  },
+  weight: {
+    type: Number
+  },
+  height: {
+    type: Number
+  },
+  dateCreated: {
+    type: Date,
+    default: Date.now()
+  },
+  tokens: [
+    {
+      token: {
+        type: String
+      }
+    }
+  ]
+},
+{
+  timestamps: true
+})
 
 userSchema.methods.generateAuthToken = async () => {
   const user = this
