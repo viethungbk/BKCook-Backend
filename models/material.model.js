@@ -16,7 +16,8 @@ const materialSchema = new mongoose.Schema({
       },
       unit: {
         type: String,
-        trim: true
+        trim: true,
+        lowercase: true
       },
       quantitative: {
         type: Number

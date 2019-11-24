@@ -17,6 +17,11 @@ const recipeSchema = mongoose.Schema({
   time: {
     type: Number
   },
+  image: {
+    type: String,
+    trim: true,
+    require: true
+  },
   otherMaterial: {
     type: String,
     trim: true
@@ -55,10 +60,6 @@ const recipeSchema = mongoose.Schema({
   status: {
     type: Number
   },
-  category: [{
-    type: String,
-    trim: true
-  }],
   dateCreated: {
     type: Date,
     default: Date.now()
