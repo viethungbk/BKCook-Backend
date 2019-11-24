@@ -1,0 +1,11 @@
+const mongoose = require('mongoose')
+
+const { ObjectId } = mongoose.Schema.Types
+
+const Schema = new mongoose.Schema({
+
+})
+
+const Model = mongoose.model('', Schema)
+
+module.exports = Model
