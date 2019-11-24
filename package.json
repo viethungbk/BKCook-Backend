@@ -34,6 +34,7 @@
     "express-fileupload": "^1.1.6",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.12",
+    "shortid": "^2.2.15",
     "snakecase-keys": "^3.1.0",
     "standard": "^14.3.1",
     "validator": "^12.1.0"
