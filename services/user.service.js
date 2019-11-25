@@ -4,6 +4,7 @@ const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const User = require('../models/user.model')
 const uploadImage = require('../utils/uploadImage')
+const { ResponseResult } = require('../configs/config')
 
 const signup = async (userInfo) => {
   const { email } = userInfo
@@ -16,7 +17,7 @@ const signup = async (userInfo) => {
   const user = await User.create(userInfo)
   const token = await user.generateAuthToken()
 
-  return { user, token }
+  return new ResponseResult(true, { user, token })
 }
 
 const login = async (email, password) => {

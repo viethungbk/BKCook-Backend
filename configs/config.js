@@ -5,7 +5,15 @@ const pagination = {
 
 const staticFilePath = `${__dirname}/../static`
 
+const ResponseResult = class {
+  constructor (success = true, data = {}) {
+    this.success = success
+    this.data = data
+  }
+}
+
 module.exports = {
   pagination,
-  staticFilePath
+  staticFilePath,
+  ResponseResult
 }

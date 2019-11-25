@@ -4,21 +4,24 @@ const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 
 const signup = async (req, res) => {
-  const { email } = req.body
+  const { body } = req
+  const { email, password, userName } = body
 
+  if (!userName) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập tên')
+  }
+  if (!email) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập email')
+  }
   if (!validator.isEmail(email)) {
-    throw new Error('Email không hợp lệ')
+    throw new CustomError(errorCode.BAD_REQUEST, 'Email không hợp lệ')
+  }
+  if (!password) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập password')
   }
 
-  const { user, token } = await userService.signup(req.body)
-
-  res.send({
-    status: 1,
-    results: {
-      user,
-      token
-    }
-  })
+  const rs = await userService.signup(req.body)
+  res.send(rs)
 }
 
 const login = async (req, res) => {
