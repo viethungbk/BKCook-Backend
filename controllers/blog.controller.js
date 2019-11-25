@@ -1,3 +1,5 @@
+const validator = require('validator')
+
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const blogService = require('../services/blog.service')
@@ -17,10 +19,29 @@ const addBlog = async (req, res) => {
   }
 
   const rs = await blogService.addBlog(body, files)
+  res.send(rs)
+}
 
+const getAllBlogs = async (req, res) => {
+  const { query } = req
+  const { page, records } = query
+
+  if (page) {
+    if (!validator.isNumeric(page)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'page phải là môt số')
+    }
+  }
+  if (records) {
+    if (!validator.isNumeric(records)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'records phải là một số')
+    }
+  }
+
+  const rs = await blogService.getAllBlogs(query)
   res.send(rs)
 }
 
 module.exports = {
-  addBlog
+  addBlog,
+  getAllBlogs
 }

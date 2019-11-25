@@ -1,6 +1,9 @@
 const uploadImage = require('../utils/uploadImage')
-const { addBlogDb } = require('../db/blog.db')
 const { ResponseResult } = require('../configs/config')
+const {
+  addBlogDb,
+  getAllBlogsDb
+} = require('../db/blog.db')
 
 const addBlog = async (body, files) => {
   const { image } = files
@@ -11,14 +14,23 @@ const addBlog = async (body, files) => {
     image: imageLink
   }
 
-  const rs = await addBlogDb(blog)
+  const data = await addBlogDb(blog)
 
-  if (!rs) {
+  if (!data) {
     throw new Error('Không thể thêm blog')
   }
-  return new ResponseResult(true, rs)
+  return new ResponseResult(true, data)
+}
+
+const getAllBlogs = async (query) => {
+  const data = await getAllBlogsDb(query)
+  if (!data) {
+    throw new Error('Không thể lấy blogs')
+  }
+  return new ResponseResult(true, data)
 }
 
 module.exports = {
-  addBlog
+  addBlog,
+  getAllBlogs
 }
