@@ -186,6 +186,7 @@ Lớp học nấu ăn
 | ---------------- | ------------ | -------- | --------------------------- |
 | _id              | String       | Require  | Id của lớp học              |
 | className        | String       |          | Tên lớp học                 |
+| image            | String       |          | Ảnh lớp học                 |
 | address          | String       |          | Địa chỉ lớp học             |
 | startDate        | Date         |          | Ngày bắt đầu mở lớp         |
 | shortDescription | String       |          | Mô tả ngắn gọn về lớp học   |

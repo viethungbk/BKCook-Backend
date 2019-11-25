@@ -7,7 +7,7 @@ const errorCode = {
   TOO_MANY_REQUREST: 429,
   INTERNAL_SERVER_ERROR: 500,
   FILE_TOO_LARGE: 2,
-  CANT_CREATE_FILE: 3,
-};
+  CANT_CREATE_FILE: 3
+}
 
-module.exports = errorCode;
+module.exports = errorCode

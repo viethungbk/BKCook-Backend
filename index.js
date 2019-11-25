@@ -17,6 +17,7 @@ app.use(cors())
 app.use(fileUpload({ parseNested: true }))
 app.use('/api/users', require('./routes/user.route'))
 app.use('/api/blogs', require('./routes/blog.route'))
+app.use('/api/cooking-classes', require('./routes/cookingClass.route'))
 
 app.use(express.static(path.join(__dirname, '../static')))
 app.use(errorHandler)

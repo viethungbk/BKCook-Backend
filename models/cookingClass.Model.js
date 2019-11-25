@@ -6,16 +6,24 @@ const cookingClassSchema = new mongoose.Schema({
     trim: true,
     required: true
   },
+  image: {
+    type: String,
+    trim: true,
+    required: true
+  },
   address: {
     type: String,
-    trim: true
+    trim: true,
+    required: true
   },
   startDate: {
-    type: Date
+    type: Date,
+    required: true
   },
   shortDescription: {
     type: String,
-    trim: true
+    trim: true,
+    required: true
   },
   startTime: {
     type: String,
