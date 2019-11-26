@@ -12,8 +12,18 @@ const ResponseResult = class {
   }
 }
 
+const role = {
+  // Quản trị viên
+  ADMIN: 0,
+  // Người kiểm duyệt
+  CENSOR: 1,
+  // Người dùng
+  USER: 2
+}
+
 module.exports = {
   pagination,
   staticFilePath,
-  ResponseResult
+  ResponseResult,
+  role
 }

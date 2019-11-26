@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { role } = require('../configs/config')
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -18,7 +19,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: Number,
     required: true,
-    default: 3
+    default: role.USER
   },
   userName: {
     type: String,

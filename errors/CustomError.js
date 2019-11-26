@@ -1,15 +1,15 @@
 class CustomError extends Error {
-  constructor(code, ...params) {
+  constructor (code, ...params) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
-    super(...params);
+    super(...params)
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, CustomError);
+      Error.captureStackTrace(this, CustomError)
     }
 
     // Custom debugging information
-    this.code = code;
+    this.code = code
   }
 }
-module.exports = CustomError;
+module.exports = CustomError
