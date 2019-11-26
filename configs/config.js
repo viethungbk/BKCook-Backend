@@ -17,3 +17,19 @@ module.exports = {
   staticFilePath,
   ResponseResult
 }
+
+const roleType = {
+  // Quản trị viên
+  ADMIN: 1,
+  // Người kiểm duyệt
+  CENSOR: 2,
+  // Người dùng
+  USER: 3
+}
+
+module.exports = {
+  pagination,
+  staticFilePath,
+  ResponseResult,
+  roleType
+}

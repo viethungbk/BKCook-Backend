@@ -4,6 +4,7 @@ const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const User = require('../models/user.model')
 const uploadImage = require('../utils/uploadImage')
+const { ResponseResult } = require('../configs/config')
 
 const signup = async (userInfo) => {
   const { email } = userInfo
@@ -16,23 +17,23 @@ const signup = async (userInfo) => {
   const user = await User.create(userInfo)
   const token = await user.generateAuthToken()
 
-  return { user, token }
+  return new ResponseResult(true, { user, token })
 }
 
 const login = async (email, password) => {
   const user = await User.findOne({ email })
   if (!user) {
-    throw new CustomError(errorCode.BAD_REQUEST, 'Đăng nhập thất bại')
+    throw new CustomError(errorCode.BAD_REQUEST, 'Tài khoản hoặc mật khẩu không đúng')
   }
 
   const isMatch = await bcrypt.compare(password, user.password)
   if (!isMatch) {
-    throw new CustomError(errorCode.BAD_REQUEST, 'Đăng nhập thất bại')
+    throw new CustomError(errorCode.BAD_REQUEST, 'Tài khoản hoặc mật khẩu không đúng')
   }
 
   const token = await user.generateAuthToken()
 
-  return { user, token }
+  return new ResponseResult(true, { user, token })
 }
 
 const logout = async (user, currentToken) => {

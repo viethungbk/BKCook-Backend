@@ -2,56 +2,70 @@ const validator = require('validator')
 const userService = require('../services/user.service')
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
+const { roleType } = require('../configs/config')
+const { ResponseResult } = require('../configs/config')
 
 const signup = async (req, res) => {
-  const { email } = req.body
+  const { body, user } = req
+  const { email, password, userName, role } = body
 
+  if (!userName) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập tên')
+  }
+  if (!email) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập email')
+  }
   if (!validator.isEmail(email)) {
-    throw new Error('Email không hợp lệ')
+    throw new CustomError(errorCode.BAD_REQUEST, 'Email không hợp lệ')
+  }
+  if (!password) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập password')
+  }
+  switch (role) {
+    case undefined:
+    case roleType.USER:
+      break
+    case roleType.ADMIN:
+    case roleType.CENSOR:
+      if (!user || !user.role || user.role !== roleType.ADMIN) {
+        throw new CustomError(errorCode.FORBIDDEN, 'Hành động không được phép')
+      }
+      break
+    default:
+      throw new CustomError(errorCode.BAD_REQUEST, 'Role không hợp lệ')
   }
 
-  const { user, token } = await userService.signup(req.body)
-
-  res.send({
-    status: 1,
-    results: {
-      user,
-      token
-    }
-  })
+  const rs = await userService.signup(req.body)
+  res.send(rs)
 }
 
 const login = async (req, res) => {
-  const { email, password } = req.body
+  const { body } = req
+  const { email, password } = body
 
-  const { user, token } = await userService.login(email, password)
+  if (!email) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập email')
+  }
+  if (!password) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập password')
+  }
 
-  res.send({
-    status: 1,
-    results: {
-      user,
-      token
-    }
-  })
+  const rs = await userService.login(email, password)
+  res.send(rs)
 }
 
 const logout = async (req, res) => {
   await userService.logout(req.user, req.token)
-  res.send({ status: 1 })
+  res.send(new ResponseResult(true, {}))
 }
 
-async function logoutAllDevice (req, res) {
+const logoutAllDevice = async (req, res) => {
   await userService.logoutAllDevice(req.user)
-  res.send({ status: 1 })
+  res.send(new ResponseResult(true, {}))
 }
 
-async function getInfoUser (req, res) {
-  res.send({
-    status: 1,
-    results: {
-      user: req.user
-    }
-  })
+const getInfoUser = async (req, res) => {
+  res.send(new ResponseResult(true, req.user))
 }
 
 const updateInfoUser = async (req, res) => {

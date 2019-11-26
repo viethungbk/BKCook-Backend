@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { roleType } = require('../configs/config')
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -17,12 +18,14 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: Number,
-    require: true
+    required: true,
+    default: roleType.USER
   },
   userName: {
     type: String,
     trim: true,
-    maxlength: 50
+    maxlength: 50,
+    required: true
   },
   gender: {
     type: String
@@ -52,9 +55,9 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 })
 
-userSchema.methods.generateAuthToken = async () => {
+userSchema.methods.generateAuthToken = async function () {
   const user = this
-  const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET)
+  const token = jwt.sign({ _id: user.id.toString(), expiresIn: '1h' }, process.env.JWT_SECRET)
 
   user.tokens = user.tokens.concat({ token })
   await user.save()
@@ -62,17 +65,17 @@ userSchema.methods.generateAuthToken = async () => {
   return token
 }
 
-userSchema.methods.toJSON = () => {
+userSchema.methods.toJSON = function () {
   const user = this
   const userObject = user.toObject()
   delete userObject.password
   delete userObject.tokens
-  delete userObject.role
+  // delete userObject.role
 
   return userObject
 }
 
-userSchema.pre('save', async (next) => {
+userSchema.pre('save', async function (next) {
   const user = this
   if (user.isModified('password')) {
     const salt = await bcrypt.genSalt(10)
