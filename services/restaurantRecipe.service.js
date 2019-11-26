@@ -22,7 +22,7 @@ const addRestaurantRecipe = async (body, files) => {
   return new ResponseResult(true, data)
 }
 
-const getAllBlogs = async (query) => {
+const getAllRestaurantRecipes = async (query) => {
   const data = await getAllRestaurantRecipesDb(query)
   if (!data) {
     throw new Error('Không thể lấy món ăn của nhà hàng')
@@ -32,5 +32,5 @@ const getAllBlogs = async (query) => {
 
 module.exports = {
   addRestaurantRecipe,
-  getAllBlogs
+  getAllRestaurantRecipes
 }
