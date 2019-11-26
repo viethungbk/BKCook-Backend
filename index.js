@@ -19,6 +19,7 @@ app.use('/api/users', require('./routes/user.route'))
 app.use('/api/blogs', require('./routes/blog.route'))
 app.use('/api/cooking-classes', require('./routes/cookingClass.route'))
 app.use('/api/restaurants', require('./routes/restaurant.route'))
+app.use('/api/restaurant-recipes', require('./routes/restaurantRecipe.route'))
 
 app.use(express.static(path.join(__dirname, '../static')))
 app.use(errorHandler)
