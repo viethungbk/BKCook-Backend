@@ -16,7 +16,6 @@ app.use(cors())
 
 app.use(fileUpload({ parseNested: true }))
 app.use('/api/users', require('./routes/user.route'))
-app.use('/api/hihi', require('./middlewares/auth'))
 
 app.use(express.static(path.join(__dirname, '../static')))
 app.use(errorHandler)

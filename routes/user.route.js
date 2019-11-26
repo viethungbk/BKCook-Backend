@@ -2,7 +2,10 @@ const express = require('express')
 
 const router = express.Router()
 const asyncWrap = require('../middlewares/asyncWrap')
-const { auth } = require('../middlewares/auth')
+const {
+  auth,
+  looseAuth
+} = require('../middlewares/auth')
 const {
   signup,
   login,
@@ -13,7 +16,7 @@ const {
   uploadAvatar
 } = require('../controllers/user.controller')
 
-router.post('/signup', asyncWrap(signup))
+router.post('/signup', looseAuth, asyncWrap(signup))
 router.post('/login', asyncWrap(login))
 router.post('/logout', auth, asyncWrap(logout))
 router.post('/logout-all', auth, asyncWrap(logoutAllDevice))

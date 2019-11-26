@@ -2,10 +2,11 @@ const validator = require('validator')
 const userService = require('../services/user.service')
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
+const { roleType } = require('../configs/config')
 
 const signup = async (req, res) => {
-  const { body } = req
-  const { email, password, userName } = body
+  const { body, user } = req
+  const { email, password, userName, role } = body
 
   if (!userName) {
     throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập tên')
@@ -18,6 +19,19 @@ const signup = async (req, res) => {
   }
   if (!password) {
     throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập password')
+  }
+  switch (role) {
+    case undefined:
+    case roleType.USER:
+      break
+    case roleType.ADMIN:
+    case roleType.CENSOR:
+      if (!user || !user.role || user.role !== roleType.ADMIN) {
+        throw new CustomError(errorCode.FORBIDDEN, 'Hành động không được phép')
+      }
+      break
+    default:
+      throw new CustomError(errorCode.BAD_REQUEST, 'Role không hợp lệ')
   }
 
   const rs = await userService.signup(req.body)
