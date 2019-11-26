@@ -3,6 +3,7 @@ const userService = require('../services/user.service')
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const { roleType } = require('../configs/config')
+const { ResponseResult } = require('../configs/config')
 
 const signup = async (req, res) => {
   const { body, user } = req
@@ -39,36 +40,32 @@ const signup = async (req, res) => {
 }
 
 const login = async (req, res) => {
-  const { email, password } = req.body
+  const { body } = req
+  const { email, password } = body
 
-  const { user, token } = await userService.login(email, password)
+  if (!email) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập email')
+  }
+  if (!password) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập password')
+  }
 
-  res.send({
-    status: 1,
-    results: {
-      user,
-      token
-    }
-  })
+  const rs = await userService.login(email, password)
+  res.send(rs)
 }
 
 const logout = async (req, res) => {
   await userService.logout(req.user, req.token)
-  res.send({ status: 1 })
+  res.send(new ResponseResult(true, {}))
 }
 
-async function logoutAllDevice (req, res) {
+const logoutAllDevice = async (req, res) => {
   await userService.logoutAllDevice(req.user)
-  res.send({ status: 1 })
+  res.send(new ResponseResult(true, {}))
 }
 
-async function getInfoUser (req, res) {
-  res.send({
-    status: 1,
-    results: {
-      user: req.user
-    }
-  })
+const getInfoUser = async (req, res) => {
+  res.send(new ResponseResult(true, req.user))
 }
 
 const updateInfoUser = async (req, res) => {

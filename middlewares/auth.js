@@ -1,7 +1,6 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
-const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const { ResponseResult } = require('../configs/config')
 const { roleType } = require('../configs/config')
@@ -18,19 +17,20 @@ const decodeUserToken = async (token) => {
 }
 
 const auth = async (req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '') ||
-  req.header('x-access-token').replace('Bearer ', '')
+  const originToken = req.header('Authorization') || req.header('x-access-token')
 
-  if (!token) {
-    res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
+  if (!originToken) {
+    return res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
       message: 'Truy nhập trái phép'
     }))
   }
-
-  const user = decodeUserToken(token)
+  const token = originToken.replace('Bearer ', '')
+  const user = await decodeUserToken(token)
 
   if (!user) {
-    throw new CustomError(errorCode.BAD_REQUEST, 'Token không hợp lệ')
+    return res.status(errorCode.BAD_REQUEST).send(new ResponseResult(false, {
+      message: 'Token không hợp lệ'
+    }))
   }
 
   req.token = token
@@ -40,23 +40,24 @@ const auth = async (req, res, next) => {
 }
 
 const authAdmin = async (req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '') ||
-  req.header('x-access-token').replace('Bearer ', '')
+  const originToken = req.header('Authorization') || req.header('x-access-token')
 
-  if (!token) {
-    res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
+  if (!originToken) {
+    return res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
       message: 'Truy nhập trái phép'
     }))
   }
-
-  const user = decodeUserToken(token)
+  const token = originToken.replace('Bearer ', '')
+  const user = await decodeUserToken(token)
 
   if (!user) {
-    throw new CustomError(errorCode.BAD_REQUEST, 'Token không hợp lệ')
+    return res.status(errorCode.BAD_REQUEST).send(new ResponseResult(false, {
+      message: 'Token không hợp lệ'
+    }))
   }
 
   if (!user.role || user.role !== roleType.ADMIN) {
-    res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
+    return res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
       message: 'Truy nhập trái phép'
     }))
   }
@@ -68,23 +69,24 @@ const authAdmin = async (req, res, next) => {
 }
 
 const authCensor = async (req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '') ||
-  req.header('x-access-token').replace('Bearer ', '')
+  const originToken = req.header('Authorization') || req.header('x-access-token')
 
-  if (!token) {
-    res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
+  if (!originToken) {
+    return res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
       message: 'Truy nhập trái phép'
     }))
   }
-
-  const user = decodeUserToken(token)
+  const token = originToken.replace('Bearer ', '')
+  const user = await decodeUserToken(token)
 
   if (!user) {
-    throw new CustomError(errorCode.BAD_REQUEST, 'Token không hợp lệ')
+    return res.status(errorCode.BAD_REQUEST).send(new ResponseResult(false, {
+      message: 'Token không hợp lệ'
+    }))
   }
 
   if (!user.role || !(user.role === roleType.CENSOR || user.role === roleType.ADMIN)) {
-    res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
+    return res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
       message: 'Truy nhập trái phép'
     }))
   }
@@ -96,19 +98,20 @@ const authCensor = async (req, res, next) => {
 }
 
 const authUser = async (req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '') ||
-  req.header('x-access-token').replace('Bearer ', '')
+  const originToken = req.header('Authorization') || req.header('x-access-token')
 
-  if (!token) {
-    res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
+  if (!originToken) {
+    return res.status(errorCode.UNAUTHORIZED).send(new ResponseResult(false, {
       message: 'Truy nhập trái phép'
     }))
   }
-
-  const user = decodeUserToken(token)
+  const token = originToken.replace('Bearer ', '')
+  const user = await decodeUserToken(token)
 
   if (!user) {
-    throw new CustomError(errorCode.BAD_REQUEST, 'Token không hợp lệ')
+    return res.status(errorCode.BAD_REQUEST).send(new ResponseResult(false, {
+      message: 'Token không hợp lệ'
+    }))
   }
 
   req.token = token
@@ -118,11 +121,9 @@ const authUser = async (req, res, next) => {
 }
 
 const looseAuth = async (req, res, next) => {
-  console.log('Loose Auth')
   const originToken = req.header('Authorization') || req.header('x-access-token')
 
   if (!originToken) {
-    console.log('Auth Token undefined')
     return next()
   }
 
