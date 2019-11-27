@@ -8,8 +8,6 @@ const signUp = async (req, res) => {
   const { body, files } = req
   const { name, email, password, address, phone } = body
 
-  console.log(body)
-
   if (!name) {
     throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập tên nhà hàng')
   }

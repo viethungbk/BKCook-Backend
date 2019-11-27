@@ -20,19 +20,34 @@ const getAllRestaurantRecipesDb = async (query) => {
   }
   page = Number.parseInt(page, 10)
   records = Number.parseInt(records, 10)
-  const totalRecords = await RestaurantRecipe.findById(restaurant).count()
+  const totalRecords = await RestaurantRecipe.countDocuments({ idRestaurant: restaurant })
 
-  const blogs = await RestaurantRecipe.findById(restaurant)
+  const restaurantRecipes = await RestaurantRecipe.find({ idRestaurant: restaurant })
     .skip((page - 1) * records)
     .limit(records)
 
   return {
     totalRecords,
-    blogs
+    restaurantRecipes
   }
+}
+
+const getRecipeByIdDb = async (query) => {
+  const { id } = query
+  const recipe = await RestaurantRecipe.findById(id)
+
+  return recipe
+}
+
+const deleteRecipeByIdDb = async (query) => {
+  const { id } = query
+  const rs = await RestaurantRecipe.findByIdAndDelete(id)
+  return rs
 }
 
 module.exports = {
   addRestaurantRecipeDb,
-  getAllRestaurantRecipesDb
+  getAllRestaurantRecipesDb,
+  getRecipeByIdDb,
+  deleteRecipeByIdDb
 }

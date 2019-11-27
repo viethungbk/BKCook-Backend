@@ -53,7 +53,33 @@ const getAllRestaurantRecipes = async (req, res) => {
   res.send(rs)
 }
 
+const getRecipeById = async (req, res) => {
+  const { query } = req
+  const { id } = query
+
+  if (!id) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm id của món ăn')
+  }
+
+  const rs = await restaurantRecipeService.getRecipeById(query)
+  res.send(rs)
+}
+
+const deleteRecipeById = async (req, res) => {
+  const { query } = req
+  const { id } = query
+
+  if (!id) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm id của món ăn')
+  }
+
+  const rs = await restaurantRecipeService.deleteRecipeById(query)
+  res.send(rs)
+}
+
 module.exports = {
   addRestaurantRecipe,
-  getAllRestaurantRecipes
+  getAllRestaurantRecipes,
+  getRecipeById,
+  deleteRecipeById
 }
