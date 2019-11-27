@@ -9,18 +9,12 @@
 - **Request**:
 
   - Method: POST
-  - Path: /basi-info
-  - Params:
-
-  | Field | Type | Require | Description |
-  | ----- | ---- | ------- | ----------- |
-  |       |      |         |             |
-
+  - Path: /basic-info
   - Headers:
 
-  | Field | Type | Require | Desciption |
-  | ----- | ---- | ------- | ---------- |
-  |       |      |         |            |
+  | Field         | Type   | Require | Desciption                |
+  | ------------- | ------ | ------- | ------------------------- |
+  | Authorization | String | Require | Token xác thực người dùng |
 
   - Body: form-data
 
@@ -37,9 +31,45 @@
 
 - **Response**:
 
+  | Field   | Type   | Require | Desciption                        |
+  | ------- | ------ | ------- | --------------------------------- |
+  | success | Boolen | Require | Request thành công hay thất bại   |
+  | data    | Object |         | Đối tượng recipe vừa được tạo mới |
+  
+### 1.2. Add recipe's material
+
+- **Request**:
+
+  - Method: 
+  - Path: 
+  - Headers:
+
+  | Field         | Type   | Require | Desciption                |
+  | ------------- | ------ | ------- | ------------------------- |
+  | Authorization | String | Require | Token xác thực người dùng |
+
+  - Body:
+
+  | Field     | Type          | Require | Desciption                     |
+  | --------- | ------------- | ------- | ------------------------------ |
+  | materials | Array[Object] | Require | Mảng các đối tượng nguyên liệu |
+
+  Mảng các đối tượng nguyên liệu có các trường như sau:
+
+  | Field        | Type   | Require | Desciption        |
+  | ------------ | ------ | ------- | ----------------- |
+  | name         | String |         | Tên nguyên liệu   |
+  | unit         | String |         | Đơn vị đo         |
+  | quantitative | Number |         | Lượng nguyên liệu |
+
+  
+
+- **Response**:
+
   | Field | Type | Require | Desciption |
   | ----- | ---- | ------- | ---------- |
   |       |      |         |            |
+
 
 
 ## 2. User

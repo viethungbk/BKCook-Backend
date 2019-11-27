@@ -8,22 +8,20 @@ const materialSchema = new mongoose.Schema({
     ref: 'Recipe',
     required: true
   },
-  materials: [
-    {
-      name: {
-        type: String,
-        trim: true
-      },
-      unit: {
-        type: String,
-        trim: true,
-        lowercase: true
-      },
-      quantitative: {
-        type: Number
-      }
+  materials: [{
+    name: {
+      type: String,
+      trim: true
+    },
+    unit: {
+      type: String,
+      trim: true,
+      lowercase: true
+    },
+    quantitative: {
+      type: Number
     }
-  ]
+  }]
 })
 
 const materialModel = mongoose.model('Material', materialSchema)
