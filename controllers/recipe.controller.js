@@ -3,7 +3,7 @@ const errorCode = require('../errors/errorCode')
 
 const recipeService = require('../services/recipe.service')
 
-const addRecipe = async (req, res) => {
+const addRecipeBasicInfo = async (req, res) => {
   const { body, files } = req
   const { title } = body
 
@@ -14,7 +14,7 @@ const addRecipe = async (req, res) => {
     throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập ảnh cho công thức')
   }
 
-  await recipeService.addRecipe(body, files)
+  await recipeService.addRecipeBasicInfo(body, files)
 
   res.send({
     status: 1
@@ -22,5 +22,5 @@ const addRecipe = async (req, res) => {
 }
 
 module.exports = {
-  addRecipe
+  addRecipeBasicInfo
 }

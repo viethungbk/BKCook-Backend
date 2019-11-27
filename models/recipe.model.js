@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const recipeSchema = mongoose.Schema({
   title: {
     type: String,
-    require: true,
     trim: true
   },
   shortDescription: {
@@ -19,8 +18,7 @@ const recipeSchema = mongoose.Schema({
   },
   image: {
     type: String,
-    trim: true,
-    require: true
+    trim: true
   },
   otherMaterial: {
     type: String,
@@ -68,7 +66,7 @@ const recipeSchema = mongoose.Schema({
     type: String,
     trim: true
   }],
-  calo: {
+  calories: {
     type: Number
   }
 })
