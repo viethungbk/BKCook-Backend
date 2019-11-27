@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const recipeSchema = mongoose.Schema({
   title: {
     type: String,
-    require: true,
     trim: true
   },
   shortDescription: {
@@ -16,6 +15,10 @@ const recipeSchema = mongoose.Schema({
   },
   time: {
     type: Number
+  },
+  image: {
+    type: String,
+    trim: true
   },
   otherMaterial: {
     type: String,
@@ -55,10 +58,6 @@ const recipeSchema = mongoose.Schema({
   status: {
     type: Number
   },
-  category: [{
-    type: String,
-    trim: true
-  }],
   dateCreated: {
     type: Date,
     default: Date.now()
@@ -67,7 +66,7 @@ const recipeSchema = mongoose.Schema({
     type: String,
     trim: true
   }],
-  calo: {
+  calories: {
     type: Number
   }
 })

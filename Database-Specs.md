@@ -6,24 +6,25 @@ Công thức món ăn
 | Tên trường       | Kiểu dữ liệu  | Required | Mô tả                                                        |
 | ---------------- | ------------- | -------- | ------------------------------------------------------------ |
 | _id              | String        | Require  | Id công thức                                                 |
-| title            | String        | Require  | Tên công thức                                                |
-| shortDescription | String        | Require  | Mô tả ngắn gọn về công thức                                  |
+| title            | String        |          | Tên công thức                                                |
+| shortDescription | String        |          | Mô tả ngắn gọn về công thức                                  |
 | linkVideo        | String        |          | Link đến video về món ăn                                     |
 | time             | Number        |          | Thời lượng làm món ăn                                        |
+| image            | String        |          | Ảnh của món ăn                                               |
 | otherMaterial    | String        |          | Các chú thích về nguyên liệu khác để làm món ăn              |
 | tags             | Array[String] |          | Mảng các tags để tìm kiếm món ăn                             |
 | typeRecipe       | Array[String] |          | Loại công thức: Món khai vị, Món chính, Thức uống, Món nhậu, Món tráng miệng, Món ăn sáng, Bánh - Bánh ngọt, Món chay, Nhanh và dễ, Món ăn cho trẻ |
 | countryCuisine   | String        |          | Ẩm thực của đất nước: Việt Nam, Hàn Quốc, Trung Quốc, Pháp, Úc, Nga, Nam Phi, Thái Lan, Nhật, Ấn Độ, Brazil, Mexico, Malaysia, Ý, Âu, Singapore, Mỹ, Indonesia, Philipines |
 | typeOfDish       | Array[String] |          | Loại món: Salad, Lẩu, Nem - Chả, Bánh mặn, Nước ép, Chè, Snacks,... |
 | processingMethod | Array[String] |          | Phương pháp chế biến món ăn: Nướng, Luộc, Xay, Nấu, Quay, Vắt, Nước chấm, Ăn sống, Rang, Ép, Ủ,... |
-| season           | Array         |          | Món ăn này thường sử dụng vào mùa nào: Mùa xuân, Mùa hạ, Mùa thu, Mùa đông |
+| season           | String        |          | Món ăn này thường sử dụng vào mùa nào: Mùa xuân, Mùa hạ, Mùa thu, Mùa đông |
 | purpose          | Array[String] |          | Mục đích của món ăn: Ăn sáng, Giảm cân, Tiệc, Ăn gia đình, Tốt cho trẻ em, Tăng cân, Ăn trưa, Cho phái mạnh,... |
 | ratingStar       | Number        |          | Số sao rate cho công thức                                    |
 | status           | Number        |          | Trạng thái của công thức<br />0: Chưa duyệt<br />1: Đã duyệt |
-| category         | Array         |          | Category của công thức                                       |
 | dateCreated      | Date          |          | Ngày tạo công thức                                           |
 | nutrition        | Array[String] |          | Chất dinh dưỡng có trong món ăn: Gluxit, Protein, Vitamin và khoáng chất, Lipit |
 | calo             | Number        |          | Năng lượng mà món ăn cung cấp                                |
+| level            | Number        |          | Độ khó khi thực hiện món ăn:<br />0: Rất dễ<br />1: Dễ<br />2: Trung bình<br />3: Khó |
 
 ## 2. Steps
 
