@@ -32,7 +32,22 @@ const getAllRestaurantRecipesDb = async (query) => {
   }
 }
 
+const getRecipeByIdDb = async (query) => {
+  const { id } = query
+  const recipe = await RestaurantRecipe.findById(id)
+
+  return recipe
+}
+
+const deleteRecipeByIdDb = async (query) => {
+  const { id } = query
+  const rs = await RestaurantRecipe.findByIdAndDelete(id)
+  return rs
+}
+
 module.exports = {
   addRestaurantRecipeDb,
-  getAllRestaurantRecipesDb
+  getAllRestaurantRecipesDb,
+  getRecipeByIdDb,
+  deleteRecipeByIdDb
 }
