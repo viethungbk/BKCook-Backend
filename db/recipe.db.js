@@ -1,5 +1,6 @@
 const Recipe = require('../models/recipe.model')
 const Material = require('../models/material.model')
+const Step = require('../models/step.model')
 
 const addRecipeBasicInfoDb = async (recipe) => {
   const newRecipe = new Recipe({
@@ -10,7 +11,7 @@ const addRecipeBasicInfoDb = async (recipe) => {
   return rs
 }
 
-const addRecipeMaterialDb = async (body) => {
+const addRecipeMaterialsDb = async (body) => {
   const newMaterial = new Material({
     ...body
   })
@@ -21,5 +22,5 @@ const addRecipeMaterialDb = async (body) => {
 
 module.exports = {
   addRecipeBasicInfoDb,
-  addRecipeMaterialDb
+  addRecipeMaterialsDb
 }
