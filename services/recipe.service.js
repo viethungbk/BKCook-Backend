@@ -5,10 +5,10 @@ const { ResponseResult } = require('../configs/config')
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const {
-  addRecipeBasicInfoDb,
-  addRecipeMaterialsDb
+  addRecipeBasicInfoDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
+const { addMaterialsDb } = require('../db/material.db')
 
 const addRecipeBasicInfo = async (body, files) => {
   const { image } = files
@@ -49,7 +49,7 @@ const addRecipeMaterials = async (body) => {
     }
   }
 
-  const rs = await addRecipeMaterialsDb(body)
+  const rs = await addMaterialsDb(body)
   return new ResponseResult(true, rs)
 }
 

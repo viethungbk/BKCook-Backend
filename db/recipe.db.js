@@ -11,16 +11,6 @@ const addRecipeBasicInfoDb = async (recipe) => {
   return rs
 }
 
-const addRecipeMaterialsDb = async (body) => {
-  const newMaterial = new Material({
-    ...body
-  })
-
-  const rs = await newMaterial.save()
-  return rs
-}
-
 module.exports = {
-  addRecipeBasicInfoDb,
-  addRecipeMaterialsDb
+  addRecipeBasicInfoDb
 }
