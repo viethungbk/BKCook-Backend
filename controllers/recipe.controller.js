@@ -35,7 +35,7 @@ const addRecipeBasicInfo = async (req, res) => {
   res.send(rs)
 }
 
-const addRecipeMaterial = async (req, res) => {
+const addRecipeMaterials = async (req, res) => {
   const { body } = req
   const { idRecipe, materials } = body
 
@@ -49,11 +49,33 @@ const addRecipeMaterial = async (req, res) => {
     throw new CustomError(errorCode.BAD_REQUEST, 'Danh sách nguyên liệu phải là một mảng khác rỗng')
   }
 
-  const rs = await recipeService.addRecipeMaterial(body)
+  const rs = await recipeService.addRecipeMaterials(body)
+  res.send(rs)
+}
+
+const addRecipeStep = async (req, res) => {
+  const { body, files } = req
+  const { idRecipe, stepNumber, description } = body
+
+  if (!idRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
+  }
+  if (!stepNumber) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập số thứ tự của bước thực hiện')
+  }
+  if (!description) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập mô tả cho bước thực hiện')
+  }
+  if (!files || !files.image) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm ảnh cho bước thực hiện')
+  }
+
+  const rs = await recipeService.addRecipeStep(body, files)
   res.send(rs)
 }
 
 module.exports = {
   addRecipeBasicInfo,
-  addRecipeMaterial
+  addRecipeMaterials,
+  addRecipeStep
 }

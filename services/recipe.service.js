@@ -6,14 +6,14 @@ const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const {
   addRecipeBasicInfoDb,
-  addRecipeMaterialDb
+  addRecipeMaterialsDb
 } = require('../db/recipe.db')
+const { addStepDb } = require('../db/step.db')
 
 const addRecipeBasicInfo = async (body, files) => {
   const { image } = files
 
   const imageLink = await uploadImage(image, 'images/recipes')
-  console.log(imageLink)
 
   const recipe = {
     ...body,
@@ -26,7 +26,7 @@ const addRecipeBasicInfo = async (body, files) => {
   return new ResponseResult(true, rs)
 }
 
-const addRecipeMaterial = async (body) => {
+const addRecipeMaterials = async (body) => {
   const { materials } = body
   const length = materials.length
 
@@ -49,11 +49,26 @@ const addRecipeMaterial = async (body) => {
     }
   }
 
-  const rs = await addRecipeMaterialDb(body)
+  const rs = await addRecipeMaterialsDb(body)
+  return new ResponseResult(true, rs)
+}
+
+const addRecipeStep = async (body, files) => {
+  const { image } = files
+
+  const imageLink = await uploadImage(image, 'images/steps')
+
+  const data = {
+    ...body,
+    image: imageLink
+  }
+
+  const rs = await addStepDb(data)
   return new ResponseResult(true, rs)
 }
 
 module.exports = {
   addRecipeBasicInfo,
-  addRecipeMaterial
+  addRecipeMaterials,
+  addRecipeStep
 }

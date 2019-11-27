@@ -18,10 +18,10 @@ const stepSchema = new mongoose.Schema({
         type: String,
         trim: true
       },
-      images: [{
+      image: {
         type: String,
         trim: true
-      }],
+      },
       tricks: {
         type: String,
         trim: true
