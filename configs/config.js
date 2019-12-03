@@ -12,10 +12,16 @@ const ResponseResult = class {
   }
 }
 
+const postStatus = {
+  NOT_APPROVED: 0,
+  APPROVED: 1
+}
+
 module.exports = {
   pagination,
   staticFilePath,
-  ResponseResult
+  ResponseResult,
+  postStatus
 }
 
 const roleType = {
