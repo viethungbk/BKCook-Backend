@@ -17,13 +17,6 @@ const postStatus = {
   APPROVED: 1
 }
 
-module.exports = {
-  pagination,
-  staticFilePath,
-  ResponseResult,
-  postStatus
-}
-
 const roleType = {
   // Quản trị viên
   ADMIN: 1,
@@ -37,5 +30,6 @@ module.exports = {
   pagination,
   staticFilePath,
   ResponseResult,
-  roleType
+  roleType,
+  postStatus
 }
