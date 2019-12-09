@@ -41,7 +41,20 @@ const getAllBlogs = async (req, res) => {
   res.send(rs)
 }
 
+const getBlogById = async (req, res) => {
+  const { query } = req
+  const { id } = query
+
+  if (!id) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập id của blog')
+  }
+
+  const rs = await blogService.getBlogById(query)
+  res.send(rs)
+}
+
 module.exports = {
   addBlog,
-  getAllBlogs
+  getAllBlogs,
+  getBlogById
 }

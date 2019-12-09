@@ -32,7 +32,16 @@ const getAllBlogsDb = async (query) => {
   }
 }
 
+const getBlogByIdDb = async (query) => {
+  const { id } = query
+
+  const blog = await Blog.findById(id)
+
+  return blog
+}
+
 module.exports = {
   addBlogDb,
-  getAllBlogsDb
+  getAllBlogsDb,
+  getBlogByIdDb
 }
