@@ -24,7 +24,7 @@ app.use('/api/restaurant-recipes', require('./routes/restaurantRecipe.route'))
 app.use('/api/recipes', require('./routes/recipe.route'))
 app.use('/api/posts', require('./routes/post.route'))
 
-app.use(express.static(path.join(__dirname, '../static')))
+app.use(express.static(path.join(__dirname, './static')))
 app.use(errorHandler)
 
 app.listen(port, () => {
