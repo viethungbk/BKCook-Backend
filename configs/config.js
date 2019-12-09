@@ -26,10 +26,30 @@ const roleType = {
   USER: 3
 }
 
+const recipeStatus = {
+  // Trạng thái khởi tạo: công thức đang được tạo
+  INIT: 0,
+  // Công thức đã tạo xong, chờ được duyệt
+  NOT_APPROVED: 1,
+  // Công thức đã được duyệt
+  APPROVED: 2
+}
+
+// Độ khó của công thức
+const recipeLevel = {
+  VERY_EASY: 0,
+  EASY: 1,
+  MEDIUM: 2,
+  DIFFICULT: 3,
+  VERY_DIFFICULT: 4
+}
+
 module.exports = {
   pagination,
   staticFilePath,
   ResponseResult,
   roleType,
-  postStatus
+  postStatus,
+  recipeStatus,
+  recipeLevel
 }
