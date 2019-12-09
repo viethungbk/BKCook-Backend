@@ -1,7 +1,8 @@
 const uploadImage = require('../utils/uploadImage')
-const { addRecipeDb } = require('../db/recipe.db')
+const { addRecipeBasicInfoDb } = require('../db/recipe.db')
+const { ResponseResult } = require('../configs/config')
 
-const addRecipe = async (body, files) => {
+const addRecipeBasicInfo = async (body, files) => {
   const { image } = files
 
   const imageLink = await uploadImage(image, 'images/recipes')
@@ -14,9 +15,10 @@ const addRecipe = async (body, files) => {
 
   console.log('service')
 
-  await addRecipeDb(recipe)
+  const rs = await addRecipeBasicInfoDb(recipe)
+  return new ResponseResult(true, rs)
 }
 
 module.exports = {
-  addRecipe
+  addRecipeBasicInfo
 }

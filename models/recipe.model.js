@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const { recipeStatus, recipeLevel } = require('../configs/config')
+
 const recipeSchema = mongoose.Schema({
   title: {
     type: String,
@@ -13,14 +15,14 @@ const recipeSchema = mongoose.Schema({
     type: String,
     trim: true
   },
+  level: {
+    type: Number,
+    default: recipeStatus.EASY
+  },
   time: {
     type: Number
   },
   image: {
-    type: String,
-    trim: true
-  },
-  otherMaterial: {
     type: String,
     trim: true
   },
@@ -56,7 +58,8 @@ const recipeSchema = mongoose.Schema({
     type: Number
   },
   status: {
-    type: Number
+    type: Number,
+    default: recipeStatus.INIT
   },
   dateCreated: {
     type: Date,

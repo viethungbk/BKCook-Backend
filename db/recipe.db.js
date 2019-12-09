@@ -1,13 +1,14 @@
 const Recipe = require('../models/recipe.model')
 
-const addRecipeDb = async recipe => {
+const addRecipeBasicInfoDb = async (recipe) => {
   const newRecipe = new Recipe({
     ...recipe
   })
 
-  await newRecipe.save()
+  const rs = await newRecipe.save()
+  return rs
 }
 
 module.exports = {
-  addRecipeDb
+  addRecipeBasicInfoDb
 }

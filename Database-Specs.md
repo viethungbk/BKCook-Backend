@@ -11,7 +11,6 @@ Công thức món ăn
 | linkVideo        | String        |          | Link đến video về món ăn                                     |
 | time             | Number        |          | Thời lượng làm món ăn                                        |
 | image            | String        |          | Ảnh của món ăn                                               |
-| otherMaterial    | String        |          | Các chú thích về nguyên liệu khác để làm món ăn              |
 | tags             | Array[String] |          | Mảng các tags để tìm kiếm món ăn                             |
 | typeRecipe       | Array[String] |          | Loại công thức: Món khai vị, Món chính, Thức uống, Món nhậu, Món tráng miệng, Món ăn sáng, Bánh - Bánh ngọt, Món chay, Nhanh và dễ, Món ăn cho trẻ |
 | countryCuisine   | String        |          | Ẩm thực của đất nước: Việt Nam, Hàn Quốc, Trung Quốc, Pháp, Úc, Nga, Nam Phi, Thái Lan, Nhật, Ấn Độ, Brazil, Mexico, Malaysia, Ý, Âu, Singapore, Mỹ, Indonesia, Philipines |
@@ -20,7 +19,7 @@ Công thức món ăn
 | season           | String        |          | Món ăn này thường sử dụng vào mùa nào: Mùa xuân, Mùa hạ, Mùa thu, Mùa đông |
 | purpose          | Array[String] |          | Mục đích của món ăn: Ăn sáng, Giảm cân, Tiệc, Ăn gia đình, Tốt cho trẻ em, Tăng cân, Ăn trưa, Cho phái mạnh,... |
 | ratingStar       | Number        |          | Số sao rate cho công thức                                    |
-| status           | Number        |          | Trạng thái của công thức<br />0: Chưa duyệt<br />1: Đã duyệt |
+| status           | Number        |          | Trạng thái của công thức<br />0: Khởi tạo INIT<br />1: Chưa duyệt NOT_APPROVED<br />2: Đã duyệt APPROVED<br /> |
 | dateCreated      | Date          |          | Ngày tạo công thức                                           |
 | nutrition        | Array[String] |          | Chất dinh dưỡng có trong món ăn: Gluxit, Protein, Vitamin và khoáng chất, Lipit |
 | calo             | Number        |          | Năng lượng mà món ăn cung cấp                                |
