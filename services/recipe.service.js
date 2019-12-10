@@ -20,8 +20,6 @@ const addRecipeBasicInfo = async (body, files) => {
     image: imageLink
   }
 
-  console.log('service')
-
   const rs = await addRecipeBasicInfoDb(recipe)
   return new ResponseResult(true, rs)
 }
