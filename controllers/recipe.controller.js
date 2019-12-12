@@ -28,9 +28,7 @@ const addRecipeBasicInfo = async (req, res) => {
     throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm ảnh cho công thức')
   }
 
-  body.idUser = user._id
-
-  const rs = await recipeService.addRecipeBasicInfo(body, files)
+  const rs = await recipeService.addRecipeBasicInfo(body, files, user)
 
   res.send(rs)
 }
@@ -74,8 +72,58 @@ const addRecipeStep = async (req, res) => {
   res.send(rs)
 }
 
+const finishAddingRecipe = async (req, res) => {
+  const { body, user } = req
+  const { idRecipe } = body
+  if (!idRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
+  }
+
+  const rs = await recipeService.finishAddingRecipe(body, user)
+  res.send(rs)
+}
+
+const addRecipeCate = async (req, res) => {
+  const { body } = req
+  const { idRecipe, typeRecipe, countryCuisine, processingMethod, purpose } = body
+
+  if (!idRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
+  }
+  // Công thức
+  if (!typeRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'typeRecipe là bắt buộc')
+  }
+  if (!Array.isArray(typeRecipe) || typeRecipe.length === 0) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'typeRecipe là một mảng khác rỗng')
+  }
+  // Ẩm thực của quốc gia nào?
+  if (!countryCuisine) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'countryCuisine là bắt buộc')
+  }
+  // Cách thức thực hiện
+  if (!processingMethod) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'processingMethod là bắt buộc')
+  }
+  if (!Array.isArray(processingMethod) || processingMethod.length === 0) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'processingMethod là một mảng khác rỗng')
+  }
+  // Mục đích
+  if (!purpose) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'purpose là bắt buộc')
+  }
+  if (!Array.isArray(purpose) || purpose.length === 0) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'purpose là một mảng khác rỗng')
+  }
+
+  const rs = await recipeService.addRecipeCate(body)
+  res.send(rs)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
-  addRecipeStep
+  addRecipeStep,
+  finishAddingRecipe,
+  addRecipeCate
 }

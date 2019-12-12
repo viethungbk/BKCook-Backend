@@ -5,7 +5,9 @@ const router = express.Router()
 const {
   addRecipeBasicInfo,
   addRecipeMaterials,
-  addRecipeStep
+  addRecipeStep,
+  finishAddingRecipe,
+  addRecipeCate
 } = require('../controllers/recipe.controller')
 const {
   auth
@@ -14,5 +16,7 @@ const {
 router.post('/basic-info', auth, asyncWrap(addRecipeBasicInfo))
 router.post('/materials', auth, asyncWrap(addRecipeMaterials))
 router.post('/steps', auth, asyncWrap(addRecipeStep))
+router.post('/', auth, asyncWrap(finishAddingRecipe))
+router.post('/cate', auth, asyncWrap(addRecipeCate))
 
 module.exports = router

@@ -23,6 +23,11 @@ const addStepDb = async (data) => {
     const rs = await newStep.save()
     return rs
   } else {
+    for (let i = 0; i < foundStep.steps.length; i++) {
+      if (foundStep.steps[i].stepNumber === Number.parseInt(step.stepNumber, 10)) {
+        foundStep.steps.splice(i, 1)
+      }
+    }
     foundStep.steps.push(step)
     const rs = await foundStep.save()
     return rs

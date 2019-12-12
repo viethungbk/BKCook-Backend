@@ -5,18 +5,21 @@ const { ResponseResult } = require('../configs/config')
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const {
-  addRecipeBasicInfoDb
+  addRecipeBasicInfoDb,
+  finishAddingRecipeDb,
+  addRecipeCateDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
 
-const addRecipeBasicInfo = async (body, files) => {
+const addRecipeBasicInfo = async (body, files, user) => {
   const { image } = files
 
   const imageLink = await uploadImage(image, 'images/recipes')
 
   const recipe = {
     ...body,
+    idUser: user._id,
     image: imageLink
   }
 
@@ -65,8 +68,26 @@ const addRecipeStep = async (body, files) => {
   return new ResponseResult(true, rs)
 }
 
+const finishAddingRecipe = async (body, user) => {
+  const data = await finishAddingRecipeDb(body, user)
+  if (!data) {
+    throw new Error('Không thể thay đổi trạng thái của công thức')
+  }
+  return new ResponseResult(true, data)
+}
+
+const addRecipeCate = async (body) => {
+  const data = await addRecipeCateDb(body)
+  if (!data) {
+    throw new Error('Không thể thêm cate cho công thức')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
-  addRecipeStep
+  addRecipeStep,
+  finishAddingRecipe,
+  addRecipeCate
 }

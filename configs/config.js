@@ -30,7 +30,9 @@ const recipeStatus = {
   // Trạng thái khởi tạo: công thức đang được tạo
   INIT: 0,
   // Công thức đã tạo xong, chờ được duyệt
-  NOT_APPROVED: 1,
+  READY: 1,
+  // Công thức không được chấp nhận
+  NOT_APPROVED: -1,
   // Công thức đã được duyệt
   APPROVED: 2
 }
