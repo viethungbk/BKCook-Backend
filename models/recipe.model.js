@@ -1,6 +1,14 @@
 const mongoose = require('mongoose')
 
+const { recipeStatus, recipeLevel } = require('../configs/config')
+const { ObjectId } = mongoose.Schema.Types
+
 const recipeSchema = mongoose.Schema({
+  idUser: {
+    type: ObjectId,
+    ref: 'User',
+    required: true
+  },
   title: {
     type: String,
     trim: true
@@ -13,14 +21,14 @@ const recipeSchema = mongoose.Schema({
     type: String,
     trim: true
   },
+  level: {
+    type: Number,
+    default: recipeLevel.EASY
+  },
   time: {
     type: Number
   },
   image: {
-    type: String,
-    trim: true
-  },
-  otherMaterial: {
     type: String,
     trim: true
   },
@@ -56,7 +64,8 @@ const recipeSchema = mongoose.Schema({
     type: Number
   },
   status: {
-    type: Number
+    type: Number,
+    default: recipeStatus.INIT
   },
   dateCreated: {
     type: Date,

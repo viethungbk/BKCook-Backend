@@ -1,75 +1,75 @@
 # Thiết kế API
 
-## 1. Công thức
+## 1. Recipe
 
-### 1.1. Tạo mới công thức
+**Path**: api/recipes
+
+### 1.1. Add recipe basic infomation
 
 - **Request**:
 
   - Method: POST
-  - Path: api/recipes
-  - Params:
-
-  | Field | Type | Require | Description |
-  | ----- | ---- | ------- | ----------- |
-  |       |      |         |             |
-
+  - Path: /basic-info
   - Headers:
 
-  | Field | Type | Require | Desciption |
-  | ----- | ---- | ------- | ---------- |
-  |       |      |         |            |
+  | Field         | Type   | Require | Desciption                |
+  | ------------- | ------ | ------- | ------------------------- |
+  | Authorization | String | Require | Token xác thực người dùng |
 
   - Body: form-data
 
-  | Field            | Type          | Require | Desciption                  |
-  | ---------------- | ------------- | ------- | --------------------------- |
-  | title            | String        | Require | Tên công thức               |
-  | shortDescription | String        |         | Mô tả ngắn gọn về công thức |
-  | linkVideo        | String        |         | Link đến video về món ăn    |
-  | time             | Number        |         | Thời lượng làm món ăn       |
-  | image            |               |         |                             |
-  | otherMaterial    |               |         |                             |
-  | tags             | Array[String] |         |                             |
-  | typeRecipe       | Array[String] |         |                             |
-  | countryCuisine   | String        |         |                             |
-  | typeOfDish       | Array[String] |         |                             |
-  | processingMethod | Array[String] |         |                             |
-  | season           |               |         |                             |
-  | purpose          | Array[String] |         |                             |
-  | status           |               |         |                             |
-  | nutrition        | Array[String] |         |                             |
-  | calo             |               |         |                             |
-  | level            | Number        |         |                             |
-  | material         | Array[Object] |         |                             |
-  | step             | Array[Object] |         |                             |
-  
-  Trường material là mảng các Object có mô tả như sau:
-  
-  | Type         | Field  | Require | Desciption             |
-  | ------------ | ------ | ------- | ---------------------- |
-  | name         | String |         | Tên nguyên liệu        |
-  | unit         | String |         | Đơn vị tính: Kg, quả   |
-  | quantitative | Number |         | Định lượng: 1, 2.3,... |
-  
-  Trường step là mảng các Object có mô tả như sau:
-  
-  | Type        | Field         | Require | Desciption                        |
-  | ----------- | ------------- | ------- | --------------------------------- |
-  | stepNumber  | Number        |         | Số thứ tự bước làm                |
-  | description | String        |         | Mô tả cách làm trong bước này     |
-  | images      | Array[String] |         | Các ảnh mô tả cho bước này        |
-  | tricks      | String        |         | Các mẹo nhỏ để thực hiện bước này |
-  | time        | Number        |         | Thời gian thực hiện bước này      |
-  
+  | Field            | Type   | Require | Desciption                  |
+  | ---------------- | ------ | ------- | --------------------------- |
+  | title            | String | Require | Tên công thức               |
+  | shortDescription | String | Require | Mô tả ngắn gọn về công thức |
+  | linkVideo        | String |         | Link đến video về món ăn    |
+  | time             | Number | Require | Thời lượng làm món ăn       |
+  | image            | File   | Require | Ảnh của công thức           |
+  | level            | Number | Require | Độ khó của công thức        |
   
 
+
+- **Response**:
+
+  | Field   | Type   | Require | Desciption                        |
+  | ------- | ------ | ------- | --------------------------------- |
+  | success | Boolen | Require | Request thành công hay thất bại   |
+  | data    | Object |         | Đối tượng recipe vừa được tạo mới |
+  
+### 1.2. Add recipe's material
+
+- **Request**:
+
+  - Method: 
+  - Path: 
+  - Headers:
+
+  | Field         | Type   | Require | Desciption                |
+  | ------------- | ------ | ------- | ------------------------- |
+  | Authorization | String | Require | Token xác thực người dùng |
+
+  - Body:
+
+  | Field     | Type          | Require | Desciption                     |
+  | --------- | ------------- | ------- | ------------------------------ |
+  | materials | Array[Object] | Require | Mảng các đối tượng nguyên liệu |
+
+  Mảng các đối tượng nguyên liệu có các trường như sau:
+
+  | Field        | Type   | Require | Desciption        |
+  | ------------ | ------ | ------- | ----------------- |
+  | name         | String |         | Tên nguyên liệu   |
+  | unit         | String |         | Đơn vị đo         |
+  | quantitative | Number |         | Lượng nguyên liệu |
+
+  
 
 - **Response**:
 
   | Field | Type | Require | Desciption |
   | ----- | ---- | ------- | ---------- |
   |       |      |         |            |
+
 
 
 ## 2. User
