@@ -7,7 +7,8 @@ const errorCode = require('../errors/errorCode')
 const {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
-  addRecipeCateDb
+  addRecipeCateDb,
+  getRecipeByIdDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -84,10 +85,19 @@ const addRecipeCate = async (body) => {
   return new ResponseResult(true, data)
 }
 
+const getRecipeById = async (query) => {
+  const data = await getRecipeByIdDb(query)
+  if (!data) {
+    throw new Error('Không thể lấy thông tin công thức')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
   addRecipeStep,
   finishAddingRecipe,
-  addRecipeCate
+  addRecipeCate,
+  getRecipeById
 }

@@ -43,8 +43,24 @@ const addRecipeCateDb = async (body) => {
   return updatedRecipe
 }
 
+const getRecipeByIdDb = async (query) => {
+  const { idRecipe } = query
+  const recipe = await Recipe.findById(idRecipe)
+  const materials = await Material.findOne({ idRecipe })
+  const steps = await Step.findOne({ idRecipe })
+
+  return {
+    ...recipe._doc,
+    ...materials._doc,
+    ...steps._doc,
+    _id: recipe._id,
+    __v: recipe.__v
+  }
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
-  addRecipeCateDb
+  addRecipeCateDb,
+  getRecipeByIdDb
 }

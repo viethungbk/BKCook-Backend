@@ -120,10 +120,22 @@ const addRecipeCate = async (req, res) => {
   res.send(rs)
 }
 
+const getRecipeById = async (req, res) => {
+  const { query } = req
+  const { idRecipe } = query
+  if (!idRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
+  }
+
+  const rs = await recipeService.getRecipeById(query)
+  res.send(rs)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
   addRecipeStep,
   finishAddingRecipe,
-  addRecipeCate
+  addRecipeCate,
+  getRecipeById
 }
