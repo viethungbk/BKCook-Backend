@@ -48,8 +48,18 @@ const addRecipeCateDb = async (body) => {
 const getRecipeByIdDb = async (query) => {
   const { idRecipe } = query
   const recipe = await Recipe.findById(idRecipe)
-  const materials = await Material.findOne({ idRecipe })
-  const steps = await Step.findOne({ idRecipe })
+  let materials = await Material.findOne({ idRecipe })
+  let steps = await Step.findOne({ idRecipe })
+
+  if (!recipe) {
+    return null
+  }
+  if (!materials) {
+    materials = {}
+  }
+  if (!steps) {
+    steps = {}
+  }
 
   return {
     ...recipe._doc,
@@ -63,8 +73,18 @@ const getRecipeByIdDb = async (query) => {
 const changeRecipeStatusDb = async (body) => {
   const { idRecipe, status } = body
   const recipe = await Recipe.findById(idRecipe)
-  const materials = await Material.findOne({ idRecipe })
-  const steps = await Step.findOne({ idRecipe })
+  let materials = await Material.findOne({ idRecipe })
+  let steps = await Step.findOne({ idRecipe })
+
+  if (!recipe) {
+    return null
+  }
+  if (!materials) {
+    materials = {}
+  }
+  if (!steps) {
+    steps = {}
+  }
 
   recipe.status = status
   await recipe.save()
@@ -78,10 +98,30 @@ const changeRecipeStatusDb = async (body) => {
   }
 }
 
+const deleteRecipeByIdDb = async (body) => {
+  const { idRecipe } = body
+  const recipe = await Recipe.findById(idRecipe)
+  const materials = await Material.findOne({ idRecipe })
+  const steps = await Step.findOne({ idRecipe })
+
+  if (!recipe) {
+    return null
+  }
+  if (materials) {
+    await Material.findByIdAndRemove(materials._id)
+  }
+  if (steps) {
+    await Step.findByIdAndRemove(materials._id)
+  }
+  const result = Recipe.findByIdAndRemove(recipe._id)
+  return result
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
   addRecipeCateDb,
   getRecipeByIdDb,
-  changeRecipeStatusDb
+  changeRecipeStatusDb,
+  deleteRecipeByIdDb
 }

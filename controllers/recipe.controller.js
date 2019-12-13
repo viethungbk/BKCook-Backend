@@ -153,6 +153,18 @@ const changeRecipeStatus = async (req, res) => {
   res.send(rs)
 }
 
+const deleteRecipeById = async (req, res) => {
+  const { body } = req
+  const { idRecipe } = body
+
+  if (!idRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
+  }
+
+  const rs = await recipeService.deleteRecipeById(body)
+  res.send(rs)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -160,5 +172,6 @@ module.exports = {
   finishAddingRecipe,
   addRecipeCate,
   getRecipeById,
-  changeRecipeStatus
+  changeRecipeStatus,
+  deleteRecipeById
 }

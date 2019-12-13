@@ -9,7 +9,8 @@ const {
   finishAddingRecipeDb,
   addRecipeCateDb,
   getRecipeByIdDb,
-  changeRecipeStatusDb
+  changeRecipeStatusDb,
+  deleteRecipeByIdDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -87,9 +88,10 @@ const addRecipeCate = async (body) => {
 }
 
 const getRecipeById = async (query) => {
+  const { idRecipe } = query
   const data = await getRecipeByIdDb(query)
   if (!data) {
-    throw new Error('Không thể lấy thông tin công thức')
+    throw new CustomError(errorCode.NOT_FOUND, `Không tìm thấy công thức ${idRecipe}`)
   }
   return new ResponseResult(true, data)
 }
@@ -102,6 +104,16 @@ const changeRecipeStatus = async (body) => {
   return new ResponseResult(true, data)
 }
 
+const deleteRecipeById = async (body) => {
+  const data = await deleteRecipeByIdDb(body)
+  if (!data) {
+    throw new Error('Không thể xoá công thức')
+  }
+  return new ResponseResult(true, {
+    data: 'Xoá thành công công thức'
+  })
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -109,5 +121,6 @@ module.exports = {
   finishAddingRecipe,
   addRecipeCate,
   getRecipeById,
-  changeRecipeStatus
+  changeRecipeStatus,
+  deleteRecipeById
 }
