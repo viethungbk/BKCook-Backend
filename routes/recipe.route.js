@@ -7,7 +7,8 @@ const {
   addRecipeMaterials,
   addRecipeStep,
   finishAddingRecipe,
-  addRecipeCate
+  addRecipeCate,
+  getRecipeById
 } = require('../controllers/recipe.controller')
 const {
   auth
@@ -18,5 +19,6 @@ router.post('/materials', auth, asyncWrap(addRecipeMaterials))
 router.post('/steps', auth, asyncWrap(addRecipeStep))
 router.post('/', auth, asyncWrap(finishAddingRecipe))
 router.post('/cate', auth, asyncWrap(addRecipeCate))
+router.get('/id', asyncWrap(getRecipeById))
 
 module.exports = router
