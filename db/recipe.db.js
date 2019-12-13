@@ -25,9 +25,11 @@ const finishAddingRecipeDb = async (body, user) => {
   await recipe.save()
 
   return {
-    recipe,
-    materials,
-    steps
+    ...recipe._doc,
+    ...materials._doc,
+    ...steps._doc,
+    _id: recipe._id,
+    __v: recipe.__v
   }
 }
 
