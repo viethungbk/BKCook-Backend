@@ -1,6 +1,7 @@
 const snakecaseKeys = require('snakecase-keys')
 const errorCodes = require('../errors/errorCode')
 const getErrorMessage = require('../errors/message')
+const { ResponseResult } = require('../configs/config')
 
 // eslint-disable-next-line no-unused-vars
 function errorHandler (err, req, res, next) {
@@ -35,15 +36,8 @@ function errorHandler (err, req, res, next) {
   return res.status(errorCode).send(
     snakecaseKeys(
       code
-        ? {
-          status: 0,
-          code,
-          message
-        }
-        : {
-          status: 0,
-          message
-        }
+        ? new ResponseResult(false, { code, message })
+        : new ResponseResult(false, { message })
     )
   )
 }

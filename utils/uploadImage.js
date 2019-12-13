@@ -5,13 +5,12 @@ const path = require('path')
 const uploadImage = async (imageFile, relativePath) => {
   let imageLink
   try {
-    const absolutePath = path.join(__dirname, '../../static', relativePath)
+    const absolutePath = path.join(__dirname, '../static', relativePath)
 
     fs.mkdirSync(absolutePath, {
       recursive: true
     })
 
-    // const fileName = imageFile.name + shortid.generate();
     const fileName = imageFile.name.trim()
     const indexOfDot = fileName.lastIndexOf('.')
     const temp =
@@ -28,6 +27,6 @@ const uploadImage = async (imageFile, relativePath) => {
     throw new Error(`Can't store image + ${imageFile.name}`)
   }
   return imageLink
-};
+}
 
 module.exports = uploadImage
