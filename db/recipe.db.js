@@ -2,6 +2,7 @@ const Recipe = require('../models/recipe.model')
 const Material = require('../models/material.model')
 const Step = require('../models/step.model')
 const { roleType, recipeStatus } = require('../configs/config')
+const { pagination } = require('../configs/config')
 
 const addRecipeBasicInfoDb = async (recipe) => {
   const newRecipe = new Recipe({
@@ -117,11 +118,50 @@ const deleteRecipeByIdDb = async (body) => {
   return result
 }
 
+const searchRecipeDb = async (query) => {
+  let { key, page, records } = query
+  if (page === null) {
+    page = pagination.pageNumber
+  }
+  if (records === null) {
+    records = pagination.recordNumber
+  }
+  page = Number.parseInt(page, 10)
+  records = Number.parseInt(records, 10)
+
+  const fields = ['title', 'tags', 'typeRecipe', 'countryCuisine', 'typeOfDish', 'processingMethod', 'season', 'purpose']
+  const querySearch = []
+  const regExp = new RegExp(key, 'i')
+
+  fields.forEach(field => {
+    const obj = {}
+    obj[field] = regExp
+    querySearch.push(obj)
+  })
+
+  const totalRecords = await Recipe.countDocuments({
+    $or: querySearch
+  })
+
+  const recipes = await Recipe
+    .find({
+      $or: querySearch
+    })
+    .skip((page - 1) * records)
+    .limit(records)
+
+  return {
+    totalRecords,
+    recipes
+  }
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
   addRecipeCateDb,
   getRecipeByIdDb,
   changeRecipeStatusDb,
-  deleteRecipeByIdDb
+  deleteRecipeByIdDb,
+  searchRecipeDb
 }
