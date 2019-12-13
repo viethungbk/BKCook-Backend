@@ -11,7 +11,8 @@ const {
   getRecipeById,
   changeRecipeStatus,
   deleteRecipeById,
-  searchRecipe
+  searchRecipe,
+  filterRecipe
 } = require('../controllers/recipe.controller')
 const {
   auth,
@@ -27,5 +28,6 @@ router.get('/id', asyncWrap(getRecipeById))
 router.post('/status', authAdmin, asyncWrap(changeRecipeStatus))
 router.delete('/id', authAdmin, asyncWrap(deleteRecipeById))
 router.get('/search', asyncWrap(searchRecipe))
+router.get('/filter', asyncWrap(filterRecipe))
 
 module.exports = router

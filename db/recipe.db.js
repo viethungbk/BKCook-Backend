@@ -156,6 +156,41 @@ const searchRecipeDb = async (query) => {
   }
 }
 
+const filterRecipeDb = async (query) => {
+  let { level, page, records } = query
+  const fields = ['tags', 'typeRecipe', 'countryCuisine', 'typeOfDish', 'processingMethod', 'season', 'purpose']
+  const queryFilter = {}
+  if (page === null) {
+    page = pagination.pageNumber
+  }
+  if (records === null) {
+    records = pagination.recordNumber
+  }
+  page = Number.parseInt(page, 10)
+  records = Number.parseInt(records, 10)
+
+  fields.forEach(field => {
+    if (query[field]) {
+      queryFilter[field] = new RegExp(query[field], 'i')
+    }
+  })
+  queryFilter.status = recipeStatus.APPROVED
+  if (level) {
+    queryFilter.level = level
+  }
+
+  const totalRecords = await Recipe.countDocuments({
+    ...queryFilter
+  })
+  const recipes = await Recipe.find({
+    ...queryFilter
+  })
+  return {
+    totalRecords,
+    recipes
+  }
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
@@ -163,5 +198,6 @@ module.exports = {
   getRecipeByIdDb,
   changeRecipeStatusDb,
   deleteRecipeByIdDb,
-  searchRecipeDb
+  searchRecipeDb,
+  filterRecipeDb
 }

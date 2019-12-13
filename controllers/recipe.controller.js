@@ -192,6 +192,35 @@ const searchRecipe = async (req, res) => {
   res.send(rs)
 }
 
+const filterRecipe = async (req, res) => {
+  const { query } = req
+
+  if (!query) {
+    throw new CustomError(errorCode.BAD_REQUEST,
+      'Hãy nhập các trường thông tin để tìm lọc: level, tags, typeRecipe, countryCuisine, typeOfDish, processingMethod, season, purpose')
+  }
+
+  const { level, page, records } = query
+  if (page) {
+    if (!validator.isNumeric(page)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'page phải là môt số')
+    }
+  }
+  if (level) {
+    if (!validator.isNumeric(level)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'level phải là môt số')
+    }
+  }
+  if (records) {
+    if (!validator.isNumeric(records)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'records phải là một số')
+    }
+  }
+
+  const rs = await recipeService.filterRecipe(query)
+  res.send(rs)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -201,5 +230,6 @@ module.exports = {
   getRecipeById,
   changeRecipeStatus,
   deleteRecipeById,
-  searchRecipe
+  searchRecipe,
+  filterRecipe
 }

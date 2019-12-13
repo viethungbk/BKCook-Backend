@@ -11,7 +11,8 @@ const {
   getRecipeByIdDb,
   changeRecipeStatusDb,
   deleteRecipeByIdDb,
-  searchRecipeDb
+  searchRecipeDb,
+  filterRecipeDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -124,6 +125,14 @@ const searchRecipe = async (query) => {
   return new ResponseResult(true, data)
 }
 
+const filterRecipe = async (query) => {
+  const data = await filterRecipeDb(query)
+  if (!data) {
+    throw new CustomError(errorCode.NOT_FOUND, 'Không tìm thấy công thức')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -133,5 +142,6 @@ module.exports = {
   getRecipeById,
   changeRecipeStatus,
   deleteRecipeById,
-  searchRecipe
+  searchRecipe,
+  filterRecipe
 }
