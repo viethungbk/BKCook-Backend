@@ -131,11 +131,34 @@ const getRecipeById = async (req, res) => {
   res.send(rs)
 }
 
+const changeRecipeStatus = async (req, res) => {
+  const { body } = req
+  const { idRecipe, status } = body
+
+  if (!idRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
+  }
+  if (!status) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'status là bắt buộc')
+  }
+  if (!validator.isNumeric(status.toString())) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'status phải là một số')
+  }
+  if (status < -1 || status > 2) {
+    throw new CustomError(errorCode.BAD_REQUEST,
+      'status chỉ nhận các giá trị: -1(NOT_APPROVED), 0(INT), 1(READY), 2(APPROVED)')
+  }
+
+  const rs = await recipeService.changeRecipeStatus(body)
+  res.send(rs)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
   addRecipeStep,
   finishAddingRecipe,
   addRecipeCate,
-  getRecipeById
+  getRecipeById,
+  changeRecipeStatus
 }
