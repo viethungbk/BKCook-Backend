@@ -10,7 +10,8 @@ const {
   addRecipeCateDb,
   getRecipeByIdDb,
   changeRecipeStatusDb,
-  deleteRecipeByIdDb
+  deleteRecipeByIdDb,
+  searchRecipeDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -114,6 +115,15 @@ const deleteRecipeById = async (body) => {
   })
 }
 
+const searchRecipe = async (query) => {
+  const { key } = query
+  const data = await searchRecipeDb(query)
+  if (!data) {
+    throw new CustomError(errorCode.NOT_FOUND, `Không tìm thấy công thức cho từ khoá: ${key}`)
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -122,5 +132,6 @@ module.exports = {
   addRecipeCate,
   getRecipeById,
   changeRecipeStatus,
-  deleteRecipeById
+  deleteRecipeById,
+  searchRecipe
 }
