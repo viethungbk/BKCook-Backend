@@ -8,7 +8,8 @@ const {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
   addRecipeCateDb,
-  getRecipeByIdDb
+  getRecipeByIdDb,
+  changeRecipeStatusDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -93,11 +94,20 @@ const getRecipeById = async (query) => {
   return new ResponseResult(true, data)
 }
 
+const changeRecipeStatus = async (body) => {
+  const data = await changeRecipeStatusDb(body)
+  if (!data) {
+    throw new Error('Không thể lấy thay đổi trạng thái của công thức')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
   addRecipeStep,
   finishAddingRecipe,
   addRecipeCate,
-  getRecipeById
+  getRecipeById,
+  changeRecipeStatus
 }

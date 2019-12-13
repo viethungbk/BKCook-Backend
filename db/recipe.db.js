@@ -60,9 +60,28 @@ const getRecipeByIdDb = async (query) => {
   }
 }
 
+const changeRecipeStatusDb = async (body) => {
+  const { idRecipe, status } = body
+  const recipe = await Recipe.findById(idRecipe)
+  const materials = await Material.findOne({ idRecipe })
+  const steps = await Step.findOne({ idRecipe })
+
+  recipe.status = status
+  await recipe.save()
+
+  return {
+    ...recipe._doc,
+    ...materials._doc,
+    ...steps._doc,
+    _id: recipe._id,
+    __v: recipe.__v
+  }
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
   addRecipeCateDb,
-  getRecipeByIdDb
+  getRecipeByIdDb,
+  changeRecipeStatusDb
 }

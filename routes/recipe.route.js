@@ -8,10 +8,12 @@ const {
   addRecipeStep,
   finishAddingRecipe,
   addRecipeCate,
-  getRecipeById
+  getRecipeById,
+  changeRecipeStatus
 } = require('../controllers/recipe.controller')
 const {
-  auth
+  auth,
+  authAdmin
 } = require('../middlewares/auth')
 
 router.post('/basic-info', auth, asyncWrap(addRecipeBasicInfo))
@@ -20,5 +22,6 @@ router.post('/steps', auth, asyncWrap(addRecipeStep))
 router.post('/', auth, asyncWrap(finishAddingRecipe))
 router.post('/cate', auth, asyncWrap(addRecipeCate))
 router.get('/id', asyncWrap(getRecipeById))
+router.post('/status', authAdmin, asyncWrap(changeRecipeStatus))
 
 module.exports = router
