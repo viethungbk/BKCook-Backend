@@ -221,6 +221,11 @@ const filterRecipe = async (req, res) => {
   res.send(rs)
 }
 
+const getReadyRecipe = async (req, res) => {
+  const rs = await recipeService.getReadyRecipe()
+  res.send(rs)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -231,5 +236,6 @@ module.exports = {
   changeRecipeStatus,
   deleteRecipeById,
   searchRecipe,
-  filterRecipe
+  filterRecipe,
+  getReadyRecipe
 }

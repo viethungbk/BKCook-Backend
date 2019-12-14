@@ -12,7 +12,8 @@ const {
   changeRecipeStatusDb,
   deleteRecipeByIdDb,
   searchRecipeDb,
-  filterRecipeDb
+  filterRecipeDb,
+  getReadyRecipeDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -133,6 +134,14 @@ const filterRecipe = async (query) => {
   return new ResponseResult(true, data)
 }
 
+const getReadyRecipe = async () => {
+  const data = await getReadyRecipeDb()
+  if (!data) {
+    throw new CustomError(errorCode.NOT_FOUND, 'Không có công thức nào cần duyệt')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -143,5 +152,6 @@ module.exports = {
   changeRecipeStatus,
   deleteRecipeById,
   searchRecipe,
-  filterRecipe
+  filterRecipe,
+  getReadyRecipe
 }
