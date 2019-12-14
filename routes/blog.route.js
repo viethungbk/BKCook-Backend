@@ -7,8 +7,9 @@ const {
   getAllBlogs,
   getBlogById
 } = require('../controllers/blog.controller')
+const { authAdmin } = require('../middlewares/auth')
 
-router.post('/', asyncWrap(addBlog))
+router.post('/', authAdmin, asyncWrap(addBlog))
 router.get('/', asyncWrap(getAllBlogs))
 router.get('/id', asyncWrap(getBlogById))
 

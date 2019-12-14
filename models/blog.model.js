@@ -1,6 +1,17 @@
 const mongoose = require('mongoose')
 
+const { ObjectId } = mongoose.Schema.Types
+
 const blogSchema = new mongoose.Schema({
+  idUser: {
+    type: ObjectId,
+    ref: 'User',
+    required: true
+  },
+  views: {
+    type: Number,
+    default: 0
+  },
   title: {
     type: String,
     trim: true,
@@ -19,6 +30,10 @@ const blogSchema = new mongoose.Schema({
   video: {
     type: String,
     trim: true
+  },
+  dateCreated: {
+    type: Date,
+    default: Date.now()
   }
 })
 

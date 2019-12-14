@@ -5,7 +5,7 @@ const errorCode = require('../errors/errorCode')
 const blogService = require('../services/blog.service')
 
 const addBlog = async (req, res) => {
-  const { body, files } = req
+  const { user, body, files } = req
   const { title, content } = body
 
   if (!title) {
@@ -18,7 +18,7 @@ const addBlog = async (req, res) => {
     throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm ảnh cho bài viết')
   }
 
-  const rs = await blogService.addBlog(body, files)
+  const rs = await blogService.addBlog(user, body, files)
   res.send(rs)
 }
 
