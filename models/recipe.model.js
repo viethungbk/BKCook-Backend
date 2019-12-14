@@ -77,6 +77,10 @@ const recipeSchema = mongoose.Schema({
   }],
   calories: {
     type: Number
+  },
+  view: {
+    type: Number,
+    default: 0
   }
 })
 

@@ -61,6 +61,8 @@ const getRecipeByIdDb = async (query) => {
   if (!steps) {
     steps = {}
   }
+  recipe.view += 1
+  await recipe.save()
 
   return {
     ...recipe._doc,
