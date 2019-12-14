@@ -14,9 +14,7 @@ const {
   searchRecipeDb,
   filterRecipeDb,
   getReadyRecipeDb,
-  getRelateRecipeDb,
-  getRelateClassDb,
-  getRelateRestaurantDb
+  getRelateRecipeDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')

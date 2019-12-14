@@ -34,7 +34,6 @@ router.delete('/id', authAdmin, asyncWrap(deleteRecipeById))
 router.get('/search', asyncWrap(searchRecipe))
 router.get('/filter', asyncWrap(filterRecipe))
 router.get('/ready', authAdmin, asyncWrap(getReadyRecipe))
-
 router.get('/related-recipes', asyncWrap(getRelateRecipe))
 router.get('/related-classes', asyncWrap(getRelateClass))
 router.get('/related-restaurants', asyncWrap(getRelateRestaurant))
