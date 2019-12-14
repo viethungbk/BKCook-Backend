@@ -40,4 +40,8 @@ router.get('/related-classes', asyncWrap(getRelateClass))
 router.get('/related-restaurants', asyncWrap(getRelateRestaurant))
 router.get('/total', asyncWrap(getTotalRecipe))
 
+router.get('/relate-recipe', asyncWrap(getRelateRecipe))
+router.get('/relate-class', asyncWrap(getRelateClass))
+router.get('/relate-restaurant', asyncWrap(getRelateRestaurant))
+
 module.exports = router
