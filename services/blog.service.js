@@ -6,12 +6,13 @@ const {
   getBlogByIdDb
 } = require('../db/blog.db')
 
-const addBlog = async (body, files) => {
+const addBlog = async (user, body, files) => {
   const { image } = files
   const imageLink = await uploadImage(image, '/images/blogs')
 
   const blog = {
     ...body,
+    idUser: user._id,
     image: imageLink
   }
 

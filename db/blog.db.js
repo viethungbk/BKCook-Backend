@@ -35,7 +35,9 @@ const getAllBlogsDb = async (query) => {
 const getBlogByIdDb = async (query) => {
   const { id } = query
 
-  const blog = await Blog.findById(id)
+  let blog = await Blog.findById(id)
+  blog.views += 1
+  blog = await blog.save()
 
   return blog
 }
