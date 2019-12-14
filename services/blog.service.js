@@ -1,9 +1,12 @@
 const uploadImage = require('../utils/uploadImage')
 const { ResponseResult } = require('../configs/config')
+const CustomError = require('../errors/CustomError')
+const errorCode = require('../errors/errorCode')
 const {
   addBlogDb,
   getAllBlogsDb,
-  getBlogByIdDb
+  getBlogByIdDb,
+  deleteBlogByIdDb
 } = require('../db/blog.db')
 
 const addBlog = async (user, body, files) => {
@@ -35,7 +38,16 @@ const getAllBlogs = async (query) => {
 const getBlogById = async (query) => {
   const data = await getBlogByIdDb(query)
   if (!data) {
-    throw new Error('Không thể lấy blog')
+    throw new CustomError(errorCode.NOT_FOUND, 'Không tìm thấy blog')
+  }
+  return new ResponseResult(true, data)
+}
+
+const deleteBlogById = async (body) => {
+  const { id } = body
+  const data = await deleteBlogByIdDb(body)
+  if (!data) {
+    throw new Error(`Không thể xoá blog: ${id}`)
   }
   return new ResponseResult(true, data)
 }
@@ -43,5 +55,6 @@ const getBlogById = async (query) => {
 module.exports = {
   addBlog,
   getAllBlogs,
-  getBlogById
+  getBlogById,
+  deleteBlogById
 }

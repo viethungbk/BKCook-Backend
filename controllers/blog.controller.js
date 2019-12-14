@@ -53,8 +53,21 @@ const getBlogById = async (req, res) => {
   res.send(rs)
 }
 
+const deleteBlogById = async (req, res) => {
+  const { body } = req
+  const { id } = body
+
+  if (!id) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập id của blog')
+  }
+
+  const rs = await blogService.deleteBlogById(body)
+  res.send(rs)
+}
+
 module.exports = {
   addBlog,
   getAllBlogs,
-  getBlogById
+  getBlogById,
+  deleteBlogById
 }

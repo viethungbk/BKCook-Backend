@@ -36,14 +36,25 @@ const getBlogByIdDb = async (query) => {
   const { id } = query
 
   let blog = await Blog.findById(id)
+  if (!blog) {
+    return null
+  }
   blog.views += 1
   blog = await blog.save()
 
   return blog
 }
 
+const deleteBlogByIdDb = async (body) => {
+  const { id } = body
+
+  const rs = await Blog.findByIdAndRemove(id)
+  return rs
+}
+
 module.exports = {
   addBlogDb,
   getAllBlogsDb,
-  getBlogByIdDb
+  getBlogByIdDb,
+  deleteBlogByIdDb
 }
