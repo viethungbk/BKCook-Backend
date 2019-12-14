@@ -36,9 +36,12 @@ const getBlogByIdDb = async (query) => {
   const { id } = query
 
   let blog = await Blog.findById(id)
+<<<<<<< HEAD
   if (!blog) {
     return null
   }
+=======
+>>>>>>> 71089975c7094ca9a7c4b8f74309617e874291db
   blog.views += 1
   blog = await blog.save()
 
