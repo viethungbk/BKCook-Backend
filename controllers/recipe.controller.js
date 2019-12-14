@@ -226,6 +226,26 @@ const getReadyRecipe = async (req, res) => {
   res.send(rs)
 }
 
+const getRelateRecipe = async (req, res) => {
+  const { query } = req
+  const { idRecipe } = query
+
+  if (!idRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
+  }
+
+  const rs = await recipeService.getRelateRecipe(query)
+  res.send(rs)
+}
+
+const getRelateClass = async (req, res) => {
+  res.send(1)
+}
+
+const getRelateRestaurant = async (req, res) => {
+  res.send(1)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -237,5 +257,8 @@ module.exports = {
   deleteRecipeById,
   searchRecipe,
   filterRecipe,
-  getReadyRecipe
+  getReadyRecipe,
+  getRelateRecipe,
+  getRelateClass,
+  getRelateRestaurant
 }

@@ -13,7 +13,10 @@ const {
   deleteRecipeById,
   searchRecipe,
   filterRecipe,
-  getReadyRecipe
+  getReadyRecipe,
+  getRelateRecipe,
+  getRelateClass,
+  getRelateRestaurant
 } = require('../controllers/recipe.controller')
 const {
   auth,
@@ -31,5 +34,9 @@ router.delete('/id', authAdmin, asyncWrap(deleteRecipeById))
 router.get('/search', asyncWrap(searchRecipe))
 router.get('/filter', asyncWrap(filterRecipe))
 router.get('/ready', authAdmin, asyncWrap(getReadyRecipe))
+
+router.get('/relate-recipe', asyncWrap(getRelateRecipe))
+router.get('/relate-class', asyncWrap(getRelateClass))
+router.get('/relate-restaurant', asyncWrap(getRelateRestaurant))
 
 module.exports = router
