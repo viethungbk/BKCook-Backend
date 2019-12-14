@@ -191,6 +191,14 @@ const filterRecipeDb = async (query) => {
   }
 }
 
+const getReadyRecipeDb = async () => {
+  const recipes = await Recipe.find({
+    status: recipeStatus.READY
+  })
+
+  return recipes
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
@@ -199,5 +207,6 @@ module.exports = {
   changeRecipeStatusDb,
   deleteRecipeByIdDb,
   searchRecipeDb,
-  filterRecipeDb
+  filterRecipeDb,
+  getReadyRecipeDb
 }
