@@ -142,6 +142,10 @@ const getReadyRecipe = async () => {
   return new ResponseResult(true, data)
 }
 
+const getRelateRecipe = async (query) => {
+
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -153,5 +157,6 @@ module.exports = {
   deleteRecipeById,
   searchRecipe,
   filterRecipe,
-  getReadyRecipe
+  getReadyRecipe,
+  getRelateRecipe
 }
