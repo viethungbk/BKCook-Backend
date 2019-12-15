@@ -13,7 +13,10 @@ const {
   deleteRecipeByIdDb,
   searchRecipeDb,
   filterRecipeDb,
-  getReadyRecipeDb
+  getReadyRecipeDb,
+  getRelateRecipeDb,
+  getRelateClassDb,
+  getRelateRestaurantDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -143,7 +146,11 @@ const getReadyRecipe = async () => {
 }
 
 const getRelateRecipe = async (query) => {
-
+  const data = await getRelateRecipeDb(query)
+  if (!data) {
+    throw new CustomError(errorCode.NOT_FOUND, 'Không có công thức nào liên quan')
+  }
+  return new ResponseResult(true, data)
 }
 
 module.exports = {
