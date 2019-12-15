@@ -35,8 +35,8 @@ router.get('/search', asyncWrap(searchRecipe))
 router.get('/filter', asyncWrap(filterRecipe))
 router.get('/ready', authAdmin, asyncWrap(getReadyRecipe))
 
-router.get('/relate-recipe', asyncWrap(getRelateRecipe))
-router.get('/relate-class', asyncWrap(getRelateClass))
-router.get('/relate-restaurant', asyncWrap(getRelateRestaurant))
+router.get('/related-recipes', asyncWrap(getRelateRecipe))
+router.get('/related-classes', asyncWrap(getRelateClass))
+router.get('/related-restaurants', asyncWrap(getRelateRestaurant))
 
 module.exports = router

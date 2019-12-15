@@ -201,6 +201,77 @@ const getReadyRecipeDb = async () => {
   return recipes
 }
 
+const getRelateRecipeDb = async (query) => {
+  let { idRecipe, page, records } = query
+
+  if (page === null) {
+    page = pagination.pageNumber
+  }
+  if (records === null) {
+    records = pagination.recordNumber
+  }
+  page = Number.parseInt(page, 10)
+  records = Number.parseInt(records, 10)
+
+  const recipe = await Recipe.findById(idRecipe)
+  if (!recipe) {
+    return null
+  }
+
+  const fields = ['tags', 'typeRecipe', 'typeOfDish', 'processingMethod', 'purpose']
+  const filter = []
+
+  fields.forEach(field => {
+    const listKeys = recipe[field]
+    if (listKeys && Array.isArray(listKeys)) {
+      listKeys.forEach(key => {
+        const temp = {}
+        // Make regex to ignore case
+        temp[field] = new RegExp(key, 'i')
+        filter.push({ ...temp })
+      })
+    }
+  })
+
+  const totalRecords = await Recipe.countDocuments({
+    $and: [
+      { status: 2 },
+      {
+        $or: [
+          ...filter
+        ]
+      }
+    ]
+  })
+
+  const recipes = await Recipe
+    .find({
+      $and: [
+        { status: 2 },
+        {
+          $or: [
+            ...filter
+          ]
+        }
+      ]
+    })
+    .skip((page - 1) * records)
+    .limit(records)
+
+  return {
+    totalRecords,
+    recipes
+  }
+}
+
+const getRelateClassDb = async () => {
+
+}
+
+const getRelateRestaurantDb = async () => {
+
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
@@ -210,5 +281,8 @@ module.exports = {
   deleteRecipeByIdDb,
   searchRecipeDb,
   filterRecipeDb,
-  getReadyRecipeDb
+  getReadyRecipeDb,
+  getRelateRecipeDb,
+  getRelateClassDb,
+  getRelateRestaurantDb
 }
