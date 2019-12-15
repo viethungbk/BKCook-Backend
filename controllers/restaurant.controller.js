@@ -1,5 +1,3 @@
-// const validator = require('validator')
-
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
 const restaurantService = require('../services/restaurant.service')
@@ -34,6 +32,27 @@ const signUp = async (req, res) => {
   res.send(rs)
 }
 
+const login = async (req, res) => {
+  const { body } = req
+  const { email, password } = body
+
+  if (!email) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập email')
+  }
+  if (!password) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập password')
+  }
+
+  const rs = await restaurantService.login(email, password)
+  res.send(rs)
+}
+
+const getInfo = async (req, res) => {
+  res.send(req.restaurant)
+}
+
 module.exports = {
-  signUp
+  signUp,
+  login,
+  getInfo
 }

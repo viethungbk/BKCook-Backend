@@ -1,6 +1,9 @@
+const bcrypt = require('bcryptjs')
+
 const uploadImage = require('../utils/uploadImage')
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
+const Restaurant = require('../models/restaurant.model')
 const { ResponseResult } = require('../configs/config')
 const {
   getRestaurantByEmail,
@@ -25,6 +28,23 @@ const signUp = async (body, files) => {
   return new ResponseResult(true, data)
 }
 
+const login = async (email, password) => {
+  const restaurant = await Restaurant.findOne({ email })
+  if (!restaurant) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Tài khoản hoặc mật khẩu không đúng')
+  }
+
+  const isMatch = await bcrypt.compare(password, restaurant.password)
+  if (!isMatch) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Tài khoản hoặc mật khẩu không đúng')
+  }
+
+  const token = await restaurant.generateAuthToken()
+
+  return new ResponseResult(true, { restaurant, token })
+}
+
 module.exports = {
-  signUp
+  signUp,
+  login
 }
