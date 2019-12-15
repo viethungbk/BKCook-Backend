@@ -5,13 +5,14 @@ const {
   getAllCookingClassesDb
 } = require('../db/cookingClass.db')
 
-const addCookingClass = async (body, files) => {
+const addCookingClass = async (body, files, restaurant) => {
   const { image } = files
   const imageLink = await uploadImage(image, '/images/blogs')
 
   const cookingClass = {
     ...body,
-    image: imageLink
+    image: imageLink,
+    idRestaurant: restaurant._id
   }
 
   const data = await addCookingClassDb(cookingClass)

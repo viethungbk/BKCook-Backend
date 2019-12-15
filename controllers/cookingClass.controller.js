@@ -5,7 +5,7 @@ const errorCode = require('../errors/errorCode')
 const cookingClassService = require('../services/cookingClass.service')
 
 const addCookingClass = async (req, res) => {
-  const { body, files } = req
+  const { body, files, restaurant } = req
   const { className, address, startDate, shortDescription } = body
 
   if (!className) {
@@ -28,7 +28,7 @@ const addCookingClass = async (req, res) => {
     throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm ảnh cho lớp học')
   }
 
-  const rs = await cookingClassService.addCookingClass(body, files)
+  const rs = await cookingClassService.addCookingClass(body, files, restaurant)
   res.send(rs)
 }
 

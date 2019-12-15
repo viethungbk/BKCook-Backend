@@ -1,6 +1,13 @@
 const mongoose = require('mongoose')
 
+const { ObjectId } = mongoose.Schema.Types
+
 const cookingClassSchema = new mongoose.Schema({
+  idRestaurant: {
+    type: ObjectId,
+    ref: 'Restaurant',
+    required: true
+  },
   className: {
     type: String,
     trim: true,
