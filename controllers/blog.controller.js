@@ -65,9 +65,37 @@ const deleteBlogById = async (req, res) => {
   res.send(rs)
 }
 
+const searchBlog = async (req, res) => {
+  const { query } = req
+
+  if (!query) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập các trường thông tin để tìm kiếm: key, page, records')
+  }
+
+  const { key, page, records } = query
+  if (!key) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập từ khoá để tìm kiếm')
+  }
+
+  if (page) {
+    if (!validator.isNumeric(page)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'page phải là môt số')
+    }
+  }
+  if (records) {
+    if (!validator.isNumeric(records)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'records phải là một số')
+    }
+  }
+
+  const rs = await blogService.searchBlog(query)
+  res.send(rs)
+}
+
 module.exports = {
   addBlog,
   getAllBlogs,
   getBlogById,
-  deleteBlogById
+  deleteBlogById,
+  searchBlog
 }

@@ -6,7 +6,8 @@ const {
   addBlogDb,
   getAllBlogsDb,
   getBlogByIdDb,
-  deleteBlogByIdDb
+  deleteBlogByIdDb,
+  searchBlogDb
 } = require('../db/blog.db')
 
 const addBlog = async (user, body, files) => {
@@ -52,9 +53,24 @@ const deleteBlogById = async (body) => {
   return new ResponseResult(true, data)
 }
 
+const searchBlog = async (query) => {
+  const { key } = query
+  const data = await searchBlogDb(query)
+  if (!data) {
+    throw new CustomError(errorCode.NOT_FOUND, `Không tìm thấy bài viết cho từ khoá: ${key}`)
+  }
+  if (data.blogs) {
+    if (data.blogs.length === 0) {
+      throw new CustomError(errorCode.NOT_FOUND, `Không tìm thấy bài viết cho từ khoá: ${key}`)
+    }
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addBlog,
   getAllBlogs,
   getBlogById,
-  deleteBlogById
+  deleteBlogById,
+  searchBlog
 }
