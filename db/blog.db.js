@@ -52,9 +52,40 @@ const deleteBlogByIdDb = async (body) => {
   return rs
 }
 
+const searchBlogDb = async (query) => {
+  let { key, page, records } = query
+  if (page === null) {
+    page = pagination.pageNumber
+  }
+  if (records === null) {
+    records = pagination.recordNumber
+  }
+  page = Number.parseInt(page, 10)
+  records = Number.parseInt(records, 10)
+
+  const regExp = new RegExp(key, 'i')
+
+  const totalRecords = await Blog.countDocuments({
+    title: regExp
+  })
+
+  const blogs = await Blog
+    .find({
+      title: regExp
+    })
+    .skip((page - 1) * records)
+    .limit(records)
+
+  return {
+    totalRecords,
+    blogs
+  }
+}
+
 module.exports = {
   addBlogDb,
   getAllBlogsDb,
   getBlogByIdDb,
-  deleteBlogByIdDb
+  deleteBlogByIdDb,
+  searchBlogDb
 }
