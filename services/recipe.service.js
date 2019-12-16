@@ -14,7 +14,8 @@ const {
   searchRecipeDb,
   filterRecipeDb,
   getReadyRecipeDb,
-  getRelateRecipeDb
+  getRelateRecipeDb,
+  getTotalRecipeDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -151,6 +152,14 @@ const getRelateRecipe = async (query) => {
   return new ResponseResult(true, data)
 }
 
+const getTotalRecipe = async () => {
+  const data = await getTotalRecipeDb()
+  if (!data) {
+    throw new CustomError(errorCode.INTERNAL_SERVER_ERROR, 'Không thể lấy tổng công thức')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -163,5 +172,6 @@ module.exports = {
   searchRecipe,
   filterRecipe,
   getReadyRecipe,
-  getRelateRecipe
+  getRelateRecipe,
+  getTotalRecipe
 }
