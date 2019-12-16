@@ -92,10 +92,16 @@ const searchBlog = async (req, res) => {
   res.send(rs)
 }
 
+const getTotalBlog = async (req, res) => {
+  const rs = await blogService.getTotalBlog()
+  res.send(rs)
+}
+
 module.exports = {
   addBlog,
   getAllBlogs,
   getBlogById,
   deleteBlogById,
-  searchBlog
+  searchBlog,
+  getTotalBlog
 }
