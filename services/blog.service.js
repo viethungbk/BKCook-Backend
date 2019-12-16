@@ -8,7 +8,8 @@ const {
   getBlogByIdDb,
   deleteBlogByIdDb,
   searchBlogDb,
-  getTotalBlogDb
+  getTotalBlogDb,
+  editBlogDb
 } = require('../db/blog.db')
 
 const addBlog = async (user, body, files) => {
@@ -76,11 +77,39 @@ const getTotalBlog = async () => {
   return new ResponseResult(true, data)
 }
 
+const editBlog = async (body, files) => {
+  const { image } = files
+  const { idBlog, title, content, video } = body
+
+  const blog = {}
+  if (image) {
+    const imageLink = await uploadImage(image, '/images/blogs')
+    blog.image = imageLink
+  }
+  if (title) {
+    blog.title = title
+  }
+  if (content) {
+    blog.content = content
+  }
+  if (video) {
+    blog.video = video
+  }
+
+  const data = await editBlogDb(idBlog, blog)
+
+  if (!data) {
+    throw new Error('Không thể sửa blog')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addBlog,
   getAllBlogs,
   getBlogById,
   deleteBlogById,
   searchBlog,
-  getTotalBlog
+  getTotalBlog,
+  editBlog
 }

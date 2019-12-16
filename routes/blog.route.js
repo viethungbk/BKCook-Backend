@@ -8,7 +8,8 @@ const {
   getBlogById,
   deleteBlogById,
   searchBlog,
-  getTotalBlog
+  getTotalBlog,
+  editBlog
 } = require('../controllers/blog.controller')
 const { authAdmin } = require('../middlewares/auth')
 
@@ -18,5 +19,6 @@ router.get('/id', asyncWrap(getBlogById))
 router.delete('/id', authAdmin, asyncWrap(deleteBlogById))
 router.get('/search', asyncWrap(searchBlog))
 router.get('/total', asyncWrap(getTotalBlog))
+router.patch('/edit', asyncWrap(editBlog))
 
 module.exports = router

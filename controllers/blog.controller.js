@@ -97,11 +97,24 @@ const getTotalBlog = async (req, res) => {
   res.send(rs)
 }
 
+const editBlog = async (req, res) => {
+  const { body, files } = req
+  const { idBlog } = body
+
+  if (!idBlog) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy nhập idBlog')
+  }
+
+  const rs = await blogService.editBlog(body, files)
+  res.send(rs)
+}
+
 module.exports = {
   addBlog,
   getAllBlogs,
   getBlogById,
   deleteBlogById,
   searchBlog,
-  getTotalBlog
+  getTotalBlog,
+  editBlog
 }

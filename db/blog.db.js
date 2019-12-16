@@ -1,5 +1,7 @@
 const Blog = require('../models/blog.model')
 const { pagination } = require('../configs/config')
+const CustomError = require('../errors/CustomError')
+const errorCode = require('../errors/errorCode')
 
 const addBlogDb = async (blog) => {
   const newBlog = new Blog({
@@ -87,11 +89,37 @@ const getTotalBlogDb = async () => {
   return total
 }
 
+const editBlogDb = async (idBlog, blog) => {
+  const editBlog = await Blog.findById(idBlog)
+  const { image, title, content, video } = blog
+
+  if (!editBlog) {
+    throw new CustomError(errorCode.NOT_FOUND, `Không tìm thấy blog có id: ${idBlog}`)
+  }
+
+  if (image) {
+    editBlog.image = image
+  }
+  if (title) {
+    editBlog.title = title
+  }
+  if (content) {
+    editBlog.content = content
+  }
+  if (video) {
+    editBlog.video = video
+  }
+
+  const result = await editBlog.save()
+  return result
+}
+
 module.exports = {
   addBlogDb,
   getAllBlogsDb,
   getBlogByIdDb,
   deleteBlogByIdDb,
   searchBlogDb,
-  getTotalBlogDb
+  getTotalBlogDb,
+  editBlogDb
 }
