@@ -85,7 +85,7 @@ const finishAddingRecipe = async (req, res) => {
 
 const addRecipeCate = async (req, res) => {
   const { body } = req
-  const { idRecipe, typeRecipe, countryCuisine, processingMethod, purpose } = body
+  const { idRecipe, typeRecipe, countryCuisine, processingMethod, purpose, tags } = body
 
   if (!idRecipe) {
     throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
@@ -114,6 +114,12 @@ const addRecipeCate = async (req, res) => {
   }
   if (!Array.isArray(purpose) || purpose.length === 0) {
     throw new CustomError(errorCode.BAD_REQUEST, 'purpose là một mảng khác rỗng')
+  }
+  if (!tags) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'tags là bắt buộc')
+  }
+  if (!Array.isArray(tags) || tags.length === 0) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'tags là một mảng khác rỗng')
   }
 
   const rs = await recipeService.addRecipeCate(body)
@@ -256,6 +262,11 @@ const getRelateRestaurant = async (req, res) => {
   res.send(1)
 }
 
+const getTotalRecipe = async (req, res) => {
+  const rs = await recipeService.getTotalRecipe()
+  res.send(rs)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -270,5 +281,6 @@ module.exports = {
   getReadyRecipe,
   getRelateRecipe,
   getRelateClass,
-  getRelateRestaurant
+  getRelateRestaurant,
+  getTotalRecipe
 }

@@ -16,7 +16,8 @@ const {
   getReadyRecipe,
   getRelateRecipe,
   getRelateClass,
-  getRelateRestaurant
+  getRelateRestaurant,
+  getTotalRecipe
 } = require('../controllers/recipe.controller')
 const {
   auth,
@@ -37,5 +38,6 @@ router.get('/ready', authAdmin, asyncWrap(getReadyRecipe))
 router.get('/related-recipes', asyncWrap(getRelateRecipe))
 router.get('/related-classes', asyncWrap(getRelateClass))
 router.get('/related-restaurants', asyncWrap(getRelateRestaurant))
+router.get('/total', asyncWrap(getTotalRecipe))
 
 module.exports = router

@@ -35,12 +35,13 @@ const finishAddingRecipeDb = async (body, user) => {
 }
 
 const addRecipeCateDb = async (body) => {
-  const { idRecipe, typeRecipe, countryCuisine, processingMethod, purpose } = body
+  const { idRecipe, typeRecipe, countryCuisine, processingMethod, purpose, tags } = body
   const recipe = await Recipe.findById(idRecipe)
   recipe.typeRecipe = typeRecipe
   recipe.countryCuisine = countryCuisine
   recipe.processingMethod = processingMethod
   recipe.purpose = purpose
+  recipe.tags = tags
 
   const updatedRecipe = await recipe.save()
   return updatedRecipe
@@ -272,6 +273,11 @@ const getRelateRestaurantDb = async () => {
 
 }
 
+const getTotalRecipeDb = async () => {
+  const total = await Recipe.countDocuments({})
+  return total
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
@@ -284,5 +290,6 @@ module.exports = {
   getReadyRecipeDb,
   getRelateRecipeDb,
   getRelateClassDb,
-  getRelateRestaurantDb
+  getRelateRestaurantDb,
+  getTotalRecipeDb
 }
