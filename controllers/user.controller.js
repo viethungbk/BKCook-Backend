@@ -2,7 +2,6 @@ const validator = require('validator')
 const userService = require('../services/user.service')
 const CustomError = require('../errors/CustomError')
 const errorCode = require('../errors/errorCode')
-const { roleType } = require('../configs/config')
 const { ResponseResult } = require('../configs/config')
 
 const signup = async (req, res) => {
@@ -101,6 +100,23 @@ async function uploadAvatar (req, res) {
 
 const getTotalUser = async (req, res) => {
   const rs = await userService.getTotalUser()
+  if (!rs) {
+    throw new CustomError(
+      errorCode.INTERNAL_SERVER_ERROR,
+      'Không thể thấy tổng người dùng'
+    )
+  }
+  res.send(rs)
+}
+
+const getAllUsers = async (req, res) => {
+  const rs = await userService.getAllUsers()
+  if (!rs) {
+    throw new CustomError(
+      errorCode.INTERNAL_SERVER_ERROR,
+      'Không thể thấy danh sách người dùng'
+    )
+  }
   res.send(rs)
 }
 
@@ -112,5 +128,6 @@ module.exports = {
   getInfoUser,
   updateInfoUser,
   uploadAvatar,
-  getTotalUser
+  getTotalUser,
+  getAllUsers
 }
