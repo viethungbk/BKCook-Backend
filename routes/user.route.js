@@ -12,7 +12,8 @@ const {
   logoutAllDevice,
   getInfoUser,
   updateInfoUser,
-  uploadAvatar
+  uploadAvatar,
+  getTotalUser
 } = require('../controllers/user.controller')
 
 router.post('/signup', asyncWrap(signup))
@@ -22,5 +23,6 @@ router.post('/logout-all', auth, asyncWrap(logoutAllDevice))
 router.get('/', auth, asyncWrap(getInfoUser))
 router.patch('/', auth, asyncWrap(updateInfoUser))
 router.patch('/upload-avatar', auth, asyncWrap(uploadAvatar))
+router.get('/total', asyncWrap(getTotalUser))
 
 module.exports = router
