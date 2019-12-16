@@ -188,6 +188,9 @@ const filterRecipeDb = async (query) => {
   const recipes = await Recipe.find({
     ...queryFilter
   })
+    .skip((page - 1) * records)
+    .limit(records)
+
   return {
     totalRecords,
     recipes
