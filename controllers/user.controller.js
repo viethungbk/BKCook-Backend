@@ -99,6 +99,11 @@ async function uploadAvatar (req, res) {
   })
 }
 
+const getTotalUser = async (req, res) => {
+  const rs = await userService.getTotalUser()
+  res.send(rs)
+}
+
 module.exports = {
   signup,
   login,
@@ -106,5 +111,6 @@ module.exports = {
   logoutAllDevice,
   getInfoUser,
   updateInfoUser,
-  uploadAvatar
+  uploadAvatar,
+  getTotalUser
 }
