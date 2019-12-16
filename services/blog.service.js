@@ -7,7 +7,8 @@ const {
   getAllBlogsDb,
   getBlogByIdDb,
   deleteBlogByIdDb,
-  searchBlogDb
+  searchBlogDb,
+  getTotalBlogDb
 } = require('../db/blog.db')
 
 const addBlog = async (user, body, files) => {
@@ -67,10 +68,19 @@ const searchBlog = async (query) => {
   return new ResponseResult(true, data)
 }
 
+const getTotalBlog = async () => {
+  const data = await getTotalBlogDb()
+  if (!data) {
+    throw new Error('Không thể lấy tổng số blogs')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addBlog,
   getAllBlogs,
   getBlogById,
   deleteBlogById,
-  searchBlog
+  searchBlog,
+  getTotalBlog
 }

@@ -82,10 +82,16 @@ const searchBlogDb = async (query) => {
   }
 }
 
+const getTotalBlogDb = async () => {
+  const total = await Blog.countDocuments({})
+  return total
+}
+
 module.exports = {
   addBlogDb,
   getAllBlogsDb,
   getBlogByIdDb,
   deleteBlogByIdDb,
-  searchBlogDb
+  searchBlogDb,
+  getTotalBlogDb
 }
