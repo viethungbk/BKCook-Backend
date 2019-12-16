@@ -90,7 +90,15 @@ const uploadAvatar = async (user, avatar) => {
 const getTotalUser = async () => {
   const data = await User.countDocuments({})
   if (!data) {
-    throw new Error('Không thể lấy tổng số users')
+    throw new Error('Không thể lấy tổng số người dùng')
+  }
+  return new ResponseResult(true, data)
+}
+
+const getAllUsers = async () => {
+  const data = await User.find({})
+  if (!data) {
+    throw new Error('Không thể lấy danh sách người dùng')
   }
   return new ResponseResult(true, data)
 }
@@ -102,5 +110,6 @@ module.exports = {
   logoutAllDevice,
   updateInfoUser,
   uploadAvatar,
-  getTotalUser
+  getTotalUser,
+  getAllUsers
 }
