@@ -51,8 +51,20 @@ const getInfo = async (req, res) => {
   res.send(req.restaurant)
 }
 
+const getAllRestaurants = async (req, res) => {
+  const rs = await restaurantService.getAllRestaurants()
+  if (!rs) {
+    throw new CustomError(
+      errorCode.INTERNAL_SERVER_ERROR,
+      'Không thể thấy danh sách nhà hàng'
+    )
+  }
+  res.send(rs)
+}
+
 module.exports = {
   signUp,
   login,
-  getInfo
+  getInfo,
+  getAllRestaurants
 }
