@@ -15,7 +15,8 @@ const {
   filterRecipeDb,
   getReadyRecipeDb,
   getRelateRecipeDb,
-  getTotalRecipeDb
+  getTotalRecipeDb,
+  getRecommendRestaurantsDb
 } = require('../db/recipe.db')
 const { addStepDb } = require('../db/step.db')
 const { addMaterialsDb } = require('../db/material.db')
@@ -160,6 +161,14 @@ const getTotalRecipe = async () => {
   return new ResponseResult(true, data)
 }
 
+const getRecommendRestaurants = async (query) => {
+  const data = await getRecommendRestaurantsDb(query)
+  if (!data) {
+    throw new CustomError(errorCode.NOT_FOUND, 'Không tìm thấy nhà hàng có món ăn này')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -173,5 +182,6 @@ module.exports = {
   filterRecipe,
   getReadyRecipe,
   getRelateRecipe,
-  getTotalRecipe
+  getTotalRecipe,
+  getRecommendRestaurants
 }
