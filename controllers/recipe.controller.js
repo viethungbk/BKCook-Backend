@@ -267,6 +267,28 @@ const getTotalRecipe = async (req, res) => {
   res.send(rs)
 }
 
+const getRecommendRestaurants = async (req, res) => {
+  const { query } = req
+  const { idRecipe, page, records } = query
+
+  if (!idRecipe) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idRecipe là bắt buộc')
+  }
+  if (page) {
+    if (!validator.isNumeric(page)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'page phải là môt số')
+    }
+  }
+  if (records) {
+    if (!validator.isNumeric(records)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'records phải là một số')
+    }
+  }
+
+  const rs = await recipeService.getRecommendRestaurants(query)
+  res.send(rs)
+}
+
 module.exports = {
   addRecipeBasicInfo,
   addRecipeMaterials,
@@ -282,5 +304,6 @@ module.exports = {
   getRelateRecipe,
   getRelateClass,
   getRelateRestaurant,
-  getTotalRecipe
+  getTotalRecipe,
+  getRecommendRestaurants
 }

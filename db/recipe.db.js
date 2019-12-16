@@ -1,6 +1,8 @@
 const Recipe = require('../models/recipe.model')
 const Material = require('../models/material.model')
 const Step = require('../models/step.model')
+const RestaurantRecipe = require('../models/restaurantRecipe.model')
+const Restaurant = require('../models/restaurant.model')
 const { roleType, recipeStatus } = require('../configs/config')
 const { pagination } = require('../configs/config')
 
@@ -281,6 +283,67 @@ const getTotalRecipeDb = async () => {
   return total
 }
 
+const getRecommendRestaurantsDb = async (query) => {
+  const { idRecipe } = query
+  let { page, records } = query
+
+  if (page === null) {
+    page = pagination.pageNumber
+  }
+  if (records === null) {
+    records = pagination.recordNumber
+  }
+  page = Number.parseInt(page, 10)
+  records = Number.parseInt(records, 10)
+
+  const recipe = await Recipe.findById(idRecipe)
+  if (!recipe) {
+    return null
+  }
+  const filter = []
+  if (recipe.tags) {
+    recipe.tags.forEach(tag => {
+      filter.push({
+        title: new RegExp(tag, 'i')
+      })
+    })
+  }
+
+  const totalRecords = await RestaurantRecipe.countDocuments({
+    $or: [
+      ...filter
+    ]
+  })
+
+  const recipes = await RestaurantRecipe
+    .find({
+      $or: [
+        ...filter
+      ]
+    })
+    .skip((page - 1) * records)
+    .limit(records)
+  if (!recipes) {
+    return null
+  }
+
+  const results = []
+  await Promise.all(
+    recipes.map(async element => {
+      const restaurant = await Restaurant.findById(element.idRestaurant)
+      results.push({
+        recipe: element,
+        restaurant: restaurant
+      })
+    })
+  )
+
+  return {
+    totalRecords,
+    results
+  }
+}
+
 module.exports = {
   addRecipeBasicInfoDb,
   finishAddingRecipeDb,
@@ -294,5 +357,6 @@ module.exports = {
   getRelateRecipeDb,
   getRelateClassDb,
   getRelateRestaurantDb,
-  getTotalRecipeDb
+  getTotalRecipeDb,
+  getRecommendRestaurantsDb
 }
