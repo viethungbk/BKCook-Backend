@@ -15,7 +15,13 @@ const signUpDb = async (restaurant) => {
   }
 }
 
+const getAllRestaurantsDb = async () => {
+  const restaurants = await Restaurant.find({})
+  return restaurants
+}
+
 module.exports = {
   getRestaurantByEmail,
-  signUpDb
+  signUpDb,
+  getAllRestaurantsDb
 }

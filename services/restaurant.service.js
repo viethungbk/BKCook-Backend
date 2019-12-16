@@ -7,7 +7,8 @@ const Restaurant = require('../models/restaurant.model')
 const { ResponseResult } = require('../configs/config')
 const {
   getRestaurantByEmail,
-  signUpDb
+  signUpDb,
+  getAllRestaurantsDb
 } = require('../db/restaurant.db')
 
 const signUp = async (body, files) => {
@@ -44,7 +45,16 @@ const login = async (email, password) => {
   return new ResponseResult(true, { restaurant, token })
 }
 
+const getAllRestaurants = async () => {
+  const data = await getAllRestaurantsDb()
+  if (!data) {
+    throw new CustomError(errorCode.NOT_FOUND, 'Không có nhà hàng')
+  }
+  return new ResponseResult(true, data)
+}
+
 module.exports = {
   signUp,
-  login
+  login,
+  getAllRestaurants
 }
