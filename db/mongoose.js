@@ -1,7 +1,9 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.MONGODB_URL, {
+const MONGODB_URL = 'mongodb://localhost/bk-cook'
+
+mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
